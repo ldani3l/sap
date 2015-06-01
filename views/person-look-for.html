@@ -1,0 +1,32 @@
+<div class="span10 offset1">
+	<h2>Buscar</h2>
+	<form ng-submit='buscar()'>
+		<table class="table table-hover">
+			<tr>
+				<td><input type="text" ng-model='lastnames' placeholder='Apellidos'></td>
+				<td><input type="text" ng-model='names' placeholder='Nombres'></td>
+				<td><input type="text" placeholder='Documento' ng-model='document' id="document"></td>
+				<td><input type="submit" value="Buscar" class="btn btn-primary"></td>
+			</tr>
+		</table>
+	</form>
+	Resultados encontrados: {{ person.length }}
+	<table class="table table-hover">
+		<tr>
+			<th>Documento</th>
+			<th>Nombres y apellidos</th>
+			<th>Tipo</th>
+			<th>Iglesia</th>
+			<th>Ciudad</th>
+			<th>Ver perfil</th>
+		</tr>
+		<tr ng-repeat='p in person'>
+			<td> {{ p.document }} </td>
+			<td> {{ p.lastnames }} {{ p.names }} </td>
+			<td> {{ p.typePerson }} </td>
+			<td> {{ p.church }} </td>
+			<td> {{ p.city }} </td>
+			<td><a href='#/person-profile/{{ p.document }}' title="Ver perfil"><i class="icon-user"></i></a></td>
+		</tr>
+	</table>
+</div>

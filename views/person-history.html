@@ -1,0 +1,49 @@
+<div class="span12">
+	<h2>Histarial de datos</h2>
+	<h4 ng-repeat='p in person'>
+		<a href="#/person-profile/{{document}}" class="btn btn-info"><i class='icon-arrow-left'></i> Atras</a>
+		{{ p.document }}: {{ p.names }} {{ p.lastnames }}
+	</h4>
+	<table class="table table-hover">
+		<tr>
+			<th>Documento</th>
+			<th>Nombres y apellidos</th>
+			<th>Iglesia</th>
+			<th>Zona</th>
+			<th>Circuito</th>
+			<th>Ciudad</th>
+			<th>Teléfono</th>
+			<th>Correo</th>
+			<th>Inicio en el ministerio</th>
+			<th>Fecha de nacimiento</th>
+			<th>Última modificación</th>
+			<th>Nivel teológino</th>
+			<th>Tipo</th>
+			<th>Grado pastoral</th>
+			<th>Estado civil</th>
+			<th>Nivel académico</th>
+			<th>Seguridad social</th>
+			<th>Casa</th>
+		</tr>
+		<tr ng-repeat='p in persons'>
+			<td> {{ p.document }} </td>
+			<td> {{ p.names }} {{ p.lastnames }} </td>
+			<td> {{ p.church }} </td>
+			<td> {{ p.zone }} </td>
+			<td> {{ p.name }} {{nick}} </td>
+			<td> {{ p.city }} </td>
+			<td> {{ p.phone }} </td>
+			<td> {{ p.email }} </td>
+			<td> {{ p.startMinistry }} </td>
+			<td> {{ p.birthdate }} </td>
+			<td> {{ p.dateIn }} </td>
+			<td> {{ p.theologicalLevel }} </td>
+			<td> {{ p.typePerson }} </td>
+			<td> {{ p.pastoralLevel }} </td>
+			<td> {{ p.maritalStatus }} </td>
+			<td> {{ p.academicLevel }} </td>
+			<td> {{ p.socialSecurity }} </td>
+			<td> {{ p.typeHome }} </td>
+		</tr>
+	</table>
+</div>

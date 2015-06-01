@@ -1,0 +1,85 @@
+<div class="span4 offset4">
+	<h2>Información personal</h2>
+	<table class="table table-hover" ng-repeat='p in person'>
+		<tr>
+			<td><a href="#/person-edit/{{document}}" class="btn btn-info"><i class='icon-edit'></i> Editar</a></td>
+			<td><a href="#/person-history/{{document}}" class="btn btn-info"><i class='icon-folder-open'></i> Ver historial</a></td>
+		</tr>
+		<tr>
+			<td>Documento</td>
+			<td> {{ p.document }} </td>
+		</tr>
+		<tr>
+			<td>Nombres y apellidos</td>
+			<td> {{ p.names }} {{ p.lastnames }} </td>
+		</tr>
+		<tr>
+			<td>Sexo</td>
+			<td> {{ p.sex }} </td>
+		</tr>
+		<tr>
+			<td>Iglesia</td>
+			<td> {{ p.church }} </td>
+		</tr>
+		<tr>
+			<td>Zona</td>
+			<td>{{ p.zone }}</td>
+		</tr>
+		<tr>
+			<td>Circuito</td>
+			<td>{{ p.name }} {{nick}}</td>
+		</tr>
+		<tr>
+			<td>Ciudad</td>
+			<td> {{ p.city }} </td>
+		</tr>
+		<tr>
+			<td>Teléfono</td>
+			<td> {{ p.phone }} </td>
+		</tr>
+		<tr>
+			<td>Correo</td>
+			<td> {{ p.email }} </td>
+		</tr>
+		<tr>
+			<td>Inicio en el ministerio</td>
+			<td> {{ p.startMinistry }} </td>
+		</tr>
+		<tr>
+			<td>Fecha de nacimiento</td>
+			<td> {{ p.birthdate }} </td>
+		</tr>
+		<tr>
+			<td>Última modificación</td>
+			<td> {{ p.dateIn }} </td>
+		</tr>
+		<tr>
+			<td>Nivel teológino</td>
+			<td> {{ p.theologicalLevel }} </td>
+		</tr>
+		<tr>
+			<td>Tipo</td>
+			<td> {{ p.typePerson }} </td>
+		</tr>
+		<tr>
+			<td>Grado pastoral</td>
+			<td> {{ p.pastoralLevel }} </td>
+		</tr>
+		<tr>
+			<td>Estado civil</td>
+			<td> {{ p.maritalStatus }} </td>
+		</tr>
+		<tr>
+			<td>Nivel académico</td>
+			<td> {{ p.academicLevel }} </td>
+		</tr>
+		<tr>
+			<td>Seguridad social</td>
+			<td> {{ p.socialSecurity }} </td>
+		</tr>
+		<tr>
+			<td>Casa</td>
+			<td> {{ p.typeHome }} </td>
+		</tr>
+	</table>
+</div>

@@ -1,0 +1,162 @@
+<div class="span4 offset4">
+	<h2>Nueva persona</h2>
+	<form ng-submit='save()'>
+		<table class="table table-hover">
+			<tr>
+				<td>Documento</td>
+				<td><input type="text" ng-model='document' ng-blur='buscar()' placeholder='Documento'></td>
+			</tr>
+			<tr>
+				<td>Nombres</td>
+				<td><input type="text" ng-model='names' placeholder='Nombres'></td>
+			</tr>
+			<tr>
+				<td>Apellidos</td>
+				<td><input type="text" ng-model='lastnames' placeholder='Apellidos'></td>
+			</tr>
+			<tr>
+				<td>Fecha de nacimiento</td>
+				<td><input type="date" id="birthdate"/></td>
+			</tr>
+			<tr>
+				<td>Sexo</td>
+				<td>
+					<select name="" ng-model='sex' id="">
+						<!--<option value="" selected disabled></option>-->
+						<option value="MASCULINO">MASCULINO</option>
+						<option value="FEMENINO">FEMENINO</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Zona</td>
+				<td>
+					<select ng-model="zone" ng-change='getCircuitByZone()'>
+						<option ng-repeat='z in zones' value="{{z.id}}">{{ z.name }}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Circuito</td>
+				<td>
+					<select ng-model="circuit" ng-change='getChurchesByCircuit()'>
+						<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Iglesia</td>
+				<td>
+					<select ng-model='churchs' id="church">
+						<option ng-repeat='c in churches' value="{{c.id}}">{{c.name}}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Teléfono</td>
+				<td><input type="text" ng-model='phone' placeholder='Telefono'/></td>
+			</tr>
+			<tr>
+				<td>Correo</td>
+				<td><input type="email" ng-model='email' placeholder='Correo'/></td>
+			</tr>
+			<tr>
+				<td>Inicio en el ministerio</td>
+				<td><input type="text" ng-model='startMinistry' placeholder='Inicio en el ministerio'/></td>
+			</tr>
+			<tr>
+				<td>Nivel teológino</td>
+				<td>
+					<select ng-model="theologicalLevel">
+						<option value="" selected="">Selecionar:</option>
+						<option value="CIPEP - NIVEL BASICO">CIPEP - NIVEL BASICO</option>
+						<option value="CIPEP - NIVEL MEDIO">CIPEP - NIVEL MEDIO</option>
+						<option value="CIPEP - NIVEL AVANZADO">CIPEP - NIVEL AVANZADO</option>
+						<option value="SEMINARIO BIBLICO DE COLOMBIA">SEMINARIO BIBLICO DE COLOMBIA (MEDELLIN)</option>
+						<option value="BAUTISTA DE CALI">BAUTISTA DE CALI</option>
+						<option value="UNIVERSIDAD JAVERIANA">UNIVERSIDAD JAVERIANA</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Tipo</td>
+				<td>
+					<select ng-model="typePerson">
+						<option value="" selected="">Seleccionar:</option>
+						<option value="PASTOR">PASTOR</option>
+						<option value="CO-PASTOR">CO-PASTOR</option>
+						<option value="ESPOSA DE PASTOR">ESPOSA DE PASTOR</option>
+						<option value="LIDER">LIDER</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Grado pastoral</td>
+				<td>
+					<select ng-model="pastoralLevel">
+						<option value="" selected="">Seleccionar:</option>
+						<option value="OBRERO">OBRERO</option>
+						<option value="EN FORMACIÓN">EN FORMACIÓN</option>
+						<option value="LICENCIADO">LICENCIADO</option>
+						<option value="ORDENADO">ORDENADO</option>
+						<option value="REVERENDO">REVERENDO</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Estado civil</td>
+				<td>
+					<select ng-model="maritalStatus">
+						<option selected="" value="">Estado Civil:</option>
+						<option value="SOLTERO">SOLTERO</option>
+						<option value="CASADO">CASADO</option>
+						<option value="UNIÓN LIBRE">UNIÓN LIBRE</option>
+						<option value="SEPARADO">SEPARADO</option>
+						<option value="VIUDO">VIUDO</option>
+						<option value="DIVORCIADO">DIVORCIADO</option>
+	            	</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Nivel académico</td>
+				<td>
+					<select ng-model="academicLevel">
+						<option selected="" value="">Nivel académico:</option>
+						<option value="BÁSICA PRIMARIA">BÁSICA PRIMARIA</option>
+						<option value="SECUNDARIA INCOMPLETA">SECUNDARIA INCOMPLETA</option>
+						<option value="BÁSICA SECUNDARIA">BÁSICA SECUNDARIA</option>
+						<option value="MEDIA">MEDIA</option>
+						<option value="PREGRADO">PREGRADO</option>
+						<option value="POSTGRADO">POSTGRADO</option>
+						<option value="SIN ESTUDIOS">SIN ESTUDIOS</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Seguridad social</td>
+				<td>
+					<select ng-model="socialSecurity" id="">
+						<option selected="" value="" disabled>Seguridad Social:</option>
+						<option value="SI">SI</option>
+						<option value="NO">NO</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Casa</td>
+				<td> 
+					<select ng-model="typeHome">
+						<option value="" selected="">Seleccionar:</option>
+						<option value="PROPIA">PROPIA</option>
+						<option value="ARRENDADA">ARRENDADA</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class='btn btn-primary' value="Guardar"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div ng-include="'partials/modal-window.html'"></div>

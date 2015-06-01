@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es" ng-app='sap'>
+  <head>
+    <meta charset="utf-8">
+    <title>AIEC - SAP </title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="css/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px; 
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+      .medio{
+      vertical-align: top;
+      }
+      @media (max-width: 980px) {
+        /* Enable use of floated navbar text */
+        .navbar-text.pull-right {
+          float: none;
+          padding-left: 5px;
+          padding-right: 5px;
+        }
+      }
+    </style>
+    <link href="css/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="/media/bootstrap/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/media/bootstrap/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/media/bootstrap/ico/apple-touch-icon-114-precomposed.png">
+      <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/media/bootstrap/ico/apple-touch-icon-72-precomposed.png">
+                    <link rel="apple-touch-icon-precomposed" href="/media/bootstrap/ico/apple-touch-icon-57-precomposed.png">
+                                   <!--<link rel="shortcut icon" href="/media/bootstrap/ico/favicon.png">-->
+  </head>
+  <body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="brand" href='#/home'>SAP - AIEC</a>
+          <div class="nav-collapse collapse">
+            
+
+          <ul class="nav navbar-nav">
+        
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href id="themes">Pastor</a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+                <li><a href="#/look-for">Buscar</a></li>
+                <li><a href="#/person-new">Nuevo</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a class="dropdown-toggle" data-toggle="dropdown" href id="themes">Iglesia</a>
+              <ul class="dropdown-menu" aria-labelledby="themes">
+                <li><a href="#/church-new">Nueva</a></li>
+              </ul>
+            </li>
+           
+          </ul>
+          <ul class="nav navbar-nav pull-right">
+              <li class="dropdown">
+                <a href class="dropdown-toggle" data-toggle="dropdown">
+                  Hola: Daniel <b class="caret"></b>
+                </a>
+                <ul class="dropdown-menu">
+                  <li><a href>Cambiar pass</a></li>
+                  <li class="divider"></li>
+                  <li><a href='{{ urlServer }}/user/logout/?user={{ user }}'>Salir</a></li>
+                </ul>
+              </li>
+            </ul>
+          </div><!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div ng-view></div>
+      </div><!--/row-->
+    </div><!--/.fluid-container-->
+    
+    <footer>
+      <div class="navbar-fixed-bottom">
+        &copy; By: Daniel Alvarez <i class='icon-thumbs-up'></i>
+      </div>
+    </footer>
+    
+    <script src="js/vendor/jquery-1.11.1.min.js"></script>
+    <script src="js/vendor/angular-3.0.js"></script>
+    <script src="js/vendor/angular-route.min.js"></script>
+    <script src="js/vendor/cookies.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/services.js"></script>
+    
+    <!-- Bootstrap -->
+    <script src="css/js/bootstrap-collapse.js"></script>
+    <script src="css/js/bootstrap-transition.js"></script>
+    <script src="css/js/bootstrap-alert.js"></script>
+    <script src="css/js/bootstrap-modal.js"></script>
+    <script src="css/js/bootstrap-dropdown.js"></script>
+    <script src="css/js/bootstrap-scrollspy.js"></script>
+    <script src="css/js/bootstrap-tab.js"></script>
+    <script src="css/js/bootstrap-tooltip.js"></script>
+    <script src="css/js/bootstrap-popover.js"></script>
+    <script src="css/js/bootstrap-button.js"></script>
+    <script src="css/js/bootstrap-carousel.js"></script>
+    <script src="css/js/bootstrap-typeahead.js"></script>
+</body>
+</html>

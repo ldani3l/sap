@@ -1,0 +1,112 @@
+<div class="span4 offset4">
+	<h2>Nueva iglesia</h2>
+	<form ng-submit='save()'>
+		<table class="table table-hover">
+			<tr>
+				<td>Zona</td>
+				<td>
+					<select ng-model="zone" ng-change='getCircuitByZone()'>
+						<option ng-repeat='z in zones' value="{{z.id}}">{{ z.name }}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Circuito</td>
+				<td>
+					<select ng-model="circuit" ng-change='getChurchesByCircuit()'>
+						<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>
+					</select>
+				</td>
+			</tr>
+
+			<tr>
+				<td>Nombre Iglesia</td>
+				<td><input type="text" ng-model='name' placeholder='Nombre Iglesia'></td>
+			</tr>
+			<tr>
+				<td>Categoria</td>
+				<td>
+					<select ng-model="category">
+						<option value="" selected="selected">Seleccionar:</option>
+						<option value="IGLESIA">IGLESIA</option>
+						<option value="CONGREGACIÓN">CONGREGACIÓN</option>
+						<option value="PRECONGREGACIÓN">PRECONGREGACIÓN</option>
+						<option value="PUNTO DE PREDICACIÓN">PUNTO DE PREDICACIÓN</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Dirección</td>
+				<td><input type="text" ng-model='address' placeholder='Dirección'/></td>
+			</tr>
+			<tr>
+				<td>Telefono fijo</td>
+				<td><input type="text" ng-model='phone' placeholder='Telefono fijo'/></td>
+			</tr>
+			<tr>
+				<td>Telefono celular</td>
+				<td><input type="text" ng-model='cellular' placeholder='Telefono celular'/></td>
+			</tr>
+			<tr>
+				<td>Correo</td>
+				<td><input type="email" ng-model='email' placeholder='Correo'/></td>
+			</tr>
+			<tr>
+				<td>Cantidad de miembros</td>
+				<td><input type="text" ng-model='countMembers' placeholder='Cantidad de miembros'/></td>
+			</tr>
+			<tr>
+				<td>Personería juridica extendida</td>
+				<td>
+					<select ng-model="personeria">
+						<option selected disabled>Selecciona:</option>
+						<option value="SI">SI</option>
+						<option value="NO">NO</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Departamento</td>
+				<td>
+					<select ng-model="department" ng-change='loadCity()'>
+						<option value="{{ d.id }}" ng-repeat='d in departments'>{{ d.name }}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Ciudad</td>
+				<td>
+					<select ng-model="city">
+						<option value="{{ d.id }}" ng-repeat='d in cities'>{{ d.name }}</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Vereda o corregimiento</td>
+				<td><input type="text" ng-model='vereda' placeholder='Vereda'/></td>
+			</tr>
+			<tr>
+				<td>Estado ICM</td>
+				<td>
+					<select ng-model="estatusICM">
+						<option value="" selected="">Seleccionar:</option>
+						<option value="EN SOLICITUD">EN SOLICITUD</option>
+						<option value="1 PAGO">1 PAGO</option>
+						<option value="2 PAGO">2 PAGO</option>
+						<option value="3 PAGO">3 PAGO</option>
+						<option value="DEDICADO">DEDICADO</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Año de dedicación</td>
+				<td><input type="text" ng-model='yearDedication' placeholder='Año de dedicación'/></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class='btn btn-primary' value="Guardar"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div ng-include="'partials/modal-window.html'"></div>
