@@ -1,0 +1,24 @@
+<div class="span4 offset4">
+	<h2>Restaurar password</h2>
+	<form ng-submit='save()'>
+		<table class="table table-hover">
+			<tr>
+				<td>Nombre de usuario</td>
+				<td><input type="text" ng-model='document' ng-blur='buscar()' placeholder='Evento'></td>
+			</tr>
+			<tr>
+				<td>password</td>
+				<td><input type="password" ng-model='pass1' placeholder='Password'></td>
+			</tr>
+			<tr>
+				<td>Repetir password</td>
+				<td><input type="password" ng-model='pass2' placeholder='Repite el password'></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class='btn btn-primary' value="Guardar"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div ng-include="'partials/modal-window.html'"></div>

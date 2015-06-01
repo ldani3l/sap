@@ -1,0 +1,33 @@
+<div class="span4 offset4">
+	<h2>Reporte eventos</h2>
+	<form ng-submit='save()'>
+		<table class="table table-hover">
+			<tr>
+				<td>Eventos</td>
+				<td>
+					<select ng-model="event" id="">
+						<option value="" selected disabled>Selecciona:</option>
+						<option value="">Evento 1</option>
+						<option value="">Evento 2</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Fecha</td>
+				<td>
+					<select ng-model="event" id="">
+						<option value="" selected disabled>Selecciona:</option>
+						<option value="">Usuario 1</option>
+						<option value="">Usuario 2</option>
+					</select>
+
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" class='btn btn-primary' value="Ver reporte"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div ng-include="'partials/modal-window.html'"></div>

@@ -2,6 +2,33 @@
 
 	var app = angular.module('sap.controllers', []);
 
+	app.controller('report-event-user', ['personService', '$scope', function(personService, $scope) {
+		
+		
+	}]);
+
+	app.controller('user-reset', ['personService', '$scope', function(personService, $scope) {
+		
+		
+	}]);
+
+	app.controller('user-new', ['personService', '$scope', function(personService, $scope) {
+		
+
+	}]);
+
+
+	app.controller('event-register', ['personService', '$scope', function(personService, $scope) {
+		
+		
+	}]);
+
+	app.controller('event-new', ['personService', '$scope', function(personService, $scope) {
+		
+
+	}]);
+
+
 	app.controller('church-new', ['circuitService', '$scope', 'zoneService', 'departmentService', 'cityService',
 		function(circuitService, $scope, zoneService, departmentService, cityService) {
 

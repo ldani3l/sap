@@ -21,8 +21,36 @@
         templateUrl: 'views/church-new.html',
         controller: 'church-new'
       })
+
+
+      //Reportes      
+      .when('/report-event-user', {
+        templateUrl: 'views/report-event-user.html',
+        controller: 'report-event-user'
+      })
       
-      
+      //Usuarios
+      .when('/user-new', {
+        templateUrl: 'views/user-new.html',
+        controller: 'user-new'
+      })
+      .when('/user-reset', {
+        templateUrl: 'views/user-reset.html',
+        controller: 'user-reset'
+      })
+
+
+      //Eventos
+      .when('/event-new', {
+        templateUrl: 'views/event-new.html',
+        controller: 'event-new'
+      })
+      .when('/event-register', {
+        templateUrl: 'views/event-register.html',
+        controller: 'event-register'
+      })
+
+
       .when('/person-history/:document', {
         templateUrl: 'views/person-history.html',
         controller: 'person-history'
