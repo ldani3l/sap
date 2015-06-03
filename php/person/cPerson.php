@@ -4,12 +4,12 @@ class person extends initial {
 
 	public function __construct(){}
 
-	public function newPerson($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate){
+	public function newPerson($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation){
 		$maxId = mysql_query("select max(id) as id from person");
 		$maxId = mysql_fetch_array($maxId);
 		$maxId = ++$maxId["id"];
-		$data = mysql_query("insert into person(id, `status`, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, socialSecurity, typeHome, birthdate, dateChange)
-							values ($maxId, 1, '$document', '$names', '$lastnames', '$sex', '$church', '$phone', '$email', '$startMinistry', '$dateIn', '$theologicalLevel', '$typePerson', '$pastoralLevel', '$maritalStatus', '$academicLevel', '$socialSecurity', '$typeHome', '$birthdate', curdate())");
+		$data = mysql_query("insert into person(id, `status`, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, socialSecurity, typeHome, birthdate, dateChange, user, affiliation)
+							values ($maxId, 1, '$document', '$names', '$lastnames', '$sex', '$church', '$phone', '$email', '$startMinistry', '$dateIn', '$theologicalLevel', '$typePerson', '$pastoralLevel', '$maritalStatus', '$academicLevel', '$socialSecurity', '$typeHome', '$birthdate', curdate(), '$user', '$affiliation')");
 		
 		if($data)
 			return 'ok';
@@ -17,14 +17,14 @@ class person extends initial {
 			return mysql_error();
 	}
 
-	public function update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate){
+	public function update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation){
 		#get max id
 		$maxId = mysql_query("select max(id) as id from person");
 		$maxId = mysql_fetch_array($maxId);
 		$maxId = ++$maxId["id"];
 		
-		$data = mysql_query("insert into person(id, `status`, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, socialSecurity, typeHome, birthdate, dateChange)
-							values ($maxId, 1, '$document', '$names', '$lastnames', '$sex', '$church', '$phone', '$email', '$startMinistry', '$dateIn', '$theologicalLevel', '$typePerson', '$pastoralLevel', '$maritalStatus', '$academicLevel', '$socialSecurity', '$typeHome', '$birthdate', curdate())");
+		$data = mysql_query("insert into person(id, `status`, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, socialSecurity, typeHome, birthdate, dateChange, user, affiliation)
+							values ($maxId, 1, '$document', '$names', '$lastnames', '$sex', '$church', '$phone', '$email', '$startMinistry', '$dateIn', '$theologicalLevel', '$typePerson', '$pastoralLevel', '$maritalStatus', '$academicLevel', '$socialSecurity', '$typeHome', '$birthdate', curdate(), '$user', '$affiliation')");
 		
 		if(mysql_query("update person set status = 0 where id = '$id'") && $data)
 			return $maxId;

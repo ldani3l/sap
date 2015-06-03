@@ -65,7 +65,7 @@
 				<td><input type="text" ng-model='startMinistry' placeholder='Inicio en el ministerio'/></td>
 			</tr>
 			<tr>
-				<td>Nivel teológino</td>
+				<td>Nivel teológico</td>
 				<td>
 					<select ng-model="theologicalLevel">
 						<option value="" selected="">Selecionar:</option>
@@ -135,10 +135,21 @@
 			<tr>
 				<td>Seguridad social</td>
 				<td>
-					<select ng-model="socialSecurity" id="">
+					<select ng-model="socialSecurity" ng-change='enableAffiliation()'>
 						<option selected="" value="" disabled>Seguridad Social:</option>
 						<option value="SI">SI</option>
 						<option value="NO">NO</option>
+						<option value="REGIMEN SUBSIDIADO">REGIMEN SUBSIDIADO</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Afiliado por medio de:</td>
+				<td>
+					<select ng-model="affiliation" id='affiliation' disabled>
+						<option value="" selected disabled></option>
+						<option value="AIEC">AIEC</option>
+						<option value="INDEPENDIENTE">INDEPENDIENTE</option>
 					</select>
 				</td>
 			</tr>

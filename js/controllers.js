@@ -2,6 +2,44 @@
 
 	var app = angular.module('sap.controllers', []);
 
+	app.controller('logout', ['$rootScope', '$location', '$route', function($rootScope, $location, $route) {
+		$rootScope.user = null;
+		$rootScope.urls = [];
+		$location.path("/login");
+        $route.reload();
+		
+	}]);
+
+	app.controller('users', ['session', '$scope', '$rootScope', '$location', '$route', 
+		function(session, $scope, $rootScope, $location, $route) {
+		
+		$scope.login = function(){
+			session.login($scope.user, $scope.pass).then(function(data){
+				if(data == 'admin' || data == 'user'){
+					$rootScope.user = $scope.user;
+					session.getUrls(data).then(function(datos){
+						$rootScope.urls = datos;
+						console.log(datos);
+						$location.path("/home");
+        				$route.reload();
+					});
+				}
+				else{
+					$scope.mjs = "Error al iniciar sesión.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+			});
+		}
+
+		
+	}]);
+
+	app.controller('church-search', ['personService', '$scope', function(personService, $scope) {
+		
+		
+	}]);
+
 	app.controller('report-event-user', ['personService', '$scope', function(personService, $scope) {
 		
 		
@@ -29,8 +67,10 @@
 	}]);
 
 
-	app.controller('church-new', ['circuitService', '$scope', 'zoneService', 'departmentService', 'cityService',
-		function(circuitService, $scope, zoneService, departmentService, cityService) {
+	app.controller('church-new', ['circuitService', '$scope', 'zoneService', 'departmentService', 'cityService', 'churchService',
+		function(circuitService, $scope, zoneService, departmentService, cityService, churchService) {
+
+		($scope.name, $scope.category, $scope.address, $scope.phone, $scope.cellular, $scope.vereda, $scope.email, $scope.countMembers, $scope.personeria, $scope.circuit, $scope.city, $scope.statusICM, $scope.yearDedication, $scope.status, $scope.nit, $scope.user, $scope.affiliation)
 
 		$scope.loadCity = function(){
 			cityService.getCityByDepartment($scope.department).then(function(data){
@@ -44,6 +84,15 @@
 			});
 		}
 
+		$scope.validNit = function(){
+			if($scope.personeria=='SI')
+				$("#nit").prop("disabled",false);
+			else{
+				$("#nit").val("");
+				$("#nit").prop("disabled",true);
+			}
+		}
+
 		departmentService.getAllDepartment().then(function(data){
 			$scope.departments = data;
 		});
@@ -54,8 +103,12 @@
 	}]);
 
 
-	app.controller('person-edit',['personService', '$scope', '$routeParams', 'zoneService', 'circuitService', 'churchService',
-		function(personService, $scope, $routeParams, zoneService, circuitService, churchService){
+
+
+
+	/* ########################## person ############################## */
+	app.controller('person-edit',['personService', '$scope', '$routeParams', 'zoneService', 'circuitService', 'churchService', '$rootScope',
+		function(personService, $scope, $routeParams, zoneService, circuitService, churchService, $rootScope){
 		
 		$scope.document = $routeParams.document;
 
@@ -65,6 +118,15 @@
 				$scope.churches = data;
 			});
 		} 
+
+		$scope.enableAffiliation = function(){
+			if($scope.socialSecurity=='SI')
+				$("#affiliation").prop("disabled",false);
+			else{
+				$("#affiliation").val("");
+				$("#affiliation").prop("disabled",true);
+			}
+		}
 
 		$scope.getCircuitByZone = function(){
 			circuitService.getByZone($scope.zone).then(function(data){
@@ -77,7 +139,7 @@
 		});
 
 		$scope.save = function (){
-			personService.updatePerson($scope.id, $scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.churchs, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity).then(function(data){
+			personService.updatePerson($scope.id, $scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.churchs, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity, $rootScope.user, $scope.affiliation).then(function(data){
 				if( data == 'na' )
 				{
 					$scope.mjs = "No fue posible guardar la información.";
@@ -146,9 +208,18 @@
 				}
 			});
 		}
+
+		$scope.enableAffiliation = function(){
+			if($scope.socialSecurity=='SI')
+				$("#affiliation").prop("disabled",false);
+			else{
+				$("#affiliation").val("");
+				$("#affiliation").prop("disabled",true);
+			}
+		}
 		
 		$scope.save = function (){
-			personService.newPerson($scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.churchs, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity).then(function(data){
+			personService.newPerson($scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.churchs, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity, $scope.affiliation).then(function(data){
 				if( data == 'ok' )
 				{
 					$scope.mjs = "La información fue guardada correctamente.";

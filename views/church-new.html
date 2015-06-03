@@ -58,11 +58,17 @@
 			<tr>
 				<td>Personería juridica extendida</td>
 				<td>
-					<select ng-model="personeria">
+					<select ng-model="personeria" ng-change='validNit()'>
 						<option selected disabled>Selecciona:</option>
 						<option value="SI">SI</option>
 						<option value="NO">NO</option>
 					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>NIT</td>
+				<td>
+					<input type="text" ng-model='nit' placeholder='NIT' disabled id="nit">
 				</td>
 			</tr>
 			<tr>

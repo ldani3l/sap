@@ -3,6 +3,55 @@
   var app = angular.module('sap.services', []);
 
 
+    // ---------------------- SESSION -------------------------
+  app.factory("session", ["$http", "$q", "$rootScope", function($http, $q, $rootScope){
+
+    function login(user, pass) {
+        var deferred = $q.defer();
+        
+        var FormData = {
+            user: user,
+            pass: pass
+        };
+                 
+        $http({
+            method: 'POST',
+            url: 'php/user/viewUser.php?action=login',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+          .success(function (data){
+            deferred.resolve(data);
+          });
+        return deferred.promise;
+    }
+
+    function getUrls(type){
+      var deferred = $q.defer();
+        var FormData = {
+            type: type
+        };
+
+        $http({
+            method: 'POST',
+            url: 'php/user/viewUser.php?action=getUrls',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+        .success(function(data){
+            deferred.resolve(data);
+        });
+      return deferred.promise;
+    }
+
+    return{
+      login: login,
+      getUrls: getUrls
+    }
+
+  }]);
+
+
     // ---------------------- CITY -------------------------
     app.factory('cityService', ['$http', '$q', function ($http, $q) {
       
@@ -45,11 +94,78 @@
 
     }]);
 
-
-
     // ---------------------- CHURCH -------------------------
     app.factory('churchService', ['$http', '$q', function ($http, $q) {
-      
+
+    function churchUpdate(id, name, category, address, phone, cellular, vereda, email, countMembers, personeria, circuit, city, statusICM, yearDedication, status, nit, user, affiliation){
+      var deferred = $q.defer();
+        var FormData = {
+              id: id,
+              name: name,
+              category: category,
+              address: address,
+              phone: phone,
+              cellular: cellular,
+              vereda: vereda,
+              email: email,
+              countMembers: countMembers,
+              personeria: personeria,
+              circuit: circuit,
+              city: city,
+              statusICM: statusICM,
+              yearDedication: yearDedication,
+              status: status,
+              nit: nit,
+              user: user,
+              affiliation: affiliation
+        };
+
+        $http({
+            method: 'POST',
+            url: 'php/church/cChurch.php?action=churchUpdate',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+        .success(function(data){
+            deferred.resolve(data);
+        });
+      return deferred.promise;
+    }
+
+    function churchNew(name, category, address, phone, cellular, vereda, email, countMembers, personeria, circuit, city, statusICM, yearDedication, status, nit, user, affiliation){
+      var deferred = $q.defer();
+        var FormData = {
+              name: name,
+              category: category,
+              address: address,
+              phone: phone,
+              cellular: cellular,
+              vereda: vereda,
+              email: email,
+              countMembers: countMembers,
+              personeria: personeria,
+              circuit: circuit,
+              city: city,
+              statusICM: statusICM,
+              yearDedication: yearDedication,
+              status: status,
+              nit: nit,
+              user: user,
+              affiliation: affiliation
+        };
+
+        $http({
+            method: 'POST',
+            url: 'php/church/cChurch.php?action=churchNew',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+        .success(function(data){
+            deferred.resolve(data);
+        });
+      return deferred.promise;
+    }
+
       function getByCircuit(circuit){
         var deferred = $q.defer();
         
@@ -65,6 +181,8 @@
       }
 
       return{
+        churchNew: churchNew,
+        churchUpdate: churchUpdate,
         getByCircuit: getByCircuit
       };
 
@@ -118,7 +236,7 @@
     // ---------------------- PERSON -------------------------
     app.factory('personService', ['$http', '$q', function ($http, $q) {
 
-      function newPerson(document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity) {
+      function newPerson(document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation) {
         var deferred = $q.defer();
         
         var FormData = {
@@ -138,7 +256,9 @@
             academicLevel: academicLevel,
             typeHome: typeHome,
             birthdate: birthdate,
-            socialSecurity: socialSecurity
+            socialSecurity: socialSecurity,
+            user: user,
+            affiliation: affiliation
         };
                  
         $http({
@@ -153,7 +273,7 @@
         return deferred.promise;
       }
 
-      function updatePerson(id, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity) {
+      function updatePerson(id, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation) {
         var deferred = $q.defer();
         
         var FormData = {
@@ -174,7 +294,9 @@
             academicLevel: academicLevel,
             typeHome: typeHome,
             birthdate: birthdate,
-            socialSecurity: socialSecurity
+            socialSecurity: socialSecurity,
+            user: user,
+            affiliation: affiliation
         };
                  
         $http({

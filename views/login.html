@@ -1,0 +1,9 @@
+<div class="span2 offset5">
+	<h2>Login</h2>
+	<form class="form-signin" ng-submit='login()'>
+        <input type="text" ng-model='user' class="input-block-level" placeholder="Usuario" autofocus>
+        <input type="password" ng-model='pass' class="input-block-level" placeholder="Password">
+        <button class="btn btn-primary" type="submit">Iniciar</button>
+    </form>
+</div>
+<div ng-include="'partials/modal-window.html'"></div>

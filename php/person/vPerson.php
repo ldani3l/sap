@@ -26,9 +26,11 @@ switch($action){
 		$typeHome = $data->typeHome;
 		$birthdate = $data->birthdate;
 		$socialSecurity = $data->socialSecurity;
+		$user = $data->user;
+		$affiliation = $data->affiliation;
 
 		$p = new person();
-		$result = $p->newPerson($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate);
+		$result = $p->newPerson($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation);
 		echo $result;
 
 	break;
@@ -53,9 +55,11 @@ switch($action){
 		$typeHome = $data->typeHome;
 		$birthdate = $data->birthdate;
 		$socialSecurity = $data->socialSecurity;
+		$user = $data->user;
+		$affiliation = $data->affiliation;
 
 		$p = new person();
-		$result = $p->update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate);
+		$result = $p->update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation);
 		echo $result;
 	break;
 	

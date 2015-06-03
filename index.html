@@ -59,7 +59,7 @@
           <ul class="nav navbar-nav">
         
             <li class="dropdown">
-              <a class="dropdown-toggle" data-toggle="dropdown" href id="themes">Pastor</a>
+              <a class="dropdown-toggle" data-toggle="dropdown" href id="themes">Persona</a>
               <ul class="dropdown-menu" aria-labelledby="themes">
                 <li><a href="#/look-for">Buscar</a></li>
                 <li><a href="#/person-new">Nuevo</a></li>
@@ -69,6 +69,7 @@
               <a class="dropdown-toggle" data-toggle="dropdown" href id="themes">Iglesia</a>
               <ul class="dropdown-menu" aria-labelledby="themes">
                 <li><a href="#/church-new">Nueva</a></li>
+                <li><a href="#/church-search">Buscar</a></li>
               </ul>
             </li>
             <li class="dropdown">
@@ -95,13 +96,16 @@
           </ul>
           <ul class="nav navbar-nav pull-right">
               <li class="dropdown">
-                <a href class="dropdown-toggle" data-toggle="dropdown">
-                  Hola: Daniel <b class="caret"></b>
+                <a href class="dropdown-toggle" data-toggle="dropdown" ng-if='user'>
+                  Hola: {{user}} <b class="caret"></b>
                 </a>
-                <ul class="dropdown-menu">
+                <a href class="dropdown-toggle" data-toggle="dropdown" ng-if='!user'>
+                  Desconectad@</b>
+                </a>
+                <ul class="dropdown-menu" ng-if='user'>
                   <li><a href>Cambiar pass</a></li>
                   <li class="divider"></li>
-                  <li><a href='{{ urlServer }}/user/logout/?user={{ user }}'>Salir</a></li>
+                  <li><a href='#/logout'>Salir</a></li>
                 </ul>
               </li>
             </ul>

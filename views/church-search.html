@@ -1,0 +1,28 @@
+<div class="span12">
+	<h2>Buscar iglesia</h2>
+	<form ng-submit='save()'>
+		<table class="table table-hover">
+			<tr>
+				<td>Zona</td>
+				<td>Circuito</td>
+				<td>Nombre Iglesia</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>
+					<select ng-model="zone" ng-change='getCircuitByZone()'>
+						<option ng-repeat='z in zones' value="{{z.id}}">{{ z.name }}</option>
+					</select>
+				</td>
+				<td>
+					<select ng-model="circuit" ng-change='getChurchesByCircuit()'>
+						<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>
+					</select>
+				</td>
+				<td><input type="text" ng-model='name' placeholder='Nombre Iglesia'></td>
+				<td><input type="submit" class='btn btn-primary' value="Buscar"></td>
+			</tr>
+		</table>
+	</form>
+</div>
+<div ng-include="'partials/modal-window.html'"></div>
