@@ -38,6 +38,7 @@ switch($action){
 	case 'update':
 		$data = json_decode(file_get_contents("php://input"));
 		
+		$id = $data->id;
 		$document = $data->document;
 		$names = $data->names;
 		$lastnames = $data->lastnames;
@@ -59,7 +60,7 @@ switch($action){
 		$affiliation = $data->affiliation;
 
 		$p = new person();
-		$result = $p->update($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation);
+		$result = $p->update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation);
 		echo $result;
 	break;
 	

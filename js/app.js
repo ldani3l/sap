@@ -62,6 +62,10 @@
         templateUrl: 'views/user-reset.html',
         controller: 'user-reset'
       })
+      .when('/update-pass', {
+        templateUrl: 'views/update-pass.html',
+        controller: 'update-pass'
+      })
 
 
       //Eventos
@@ -103,7 +107,7 @@
   {
     $rootScope.$on('$routeChangeStart', function()
     {
-        //checkStatus();
+        checkStatus();
     });
 
   function checkStatus(){

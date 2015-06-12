@@ -23,7 +23,9 @@
 			<th>Estado civil</th>
 			<th>Nivel académico</th>
 			<th>Seguridad social</th>
+			<th>Tipo de afiliación</th>
 			<th>Casa</th>
+			<th>Usuario</th>
 		</tr>
 		<tr ng-repeat='p in persons'>
 			<td> {{ p.document }} </td>
@@ -43,7 +45,9 @@
 			<td> {{ p.maritalStatus }} </td>
 			<td> {{ p.academicLevel }} </td>
 			<td> {{ p.socialSecurity }} </td>
+			<td> {{ p.affiliation }} </td>
 			<td> {{ p.typeHome }} </td>
+			<td> {{ p.user }} </td>
 		</tr>
 	</table>
 </div>

@@ -17,16 +17,16 @@ class person extends initial {
 			return mysql_error();
 	}
 
-	public function update($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation){
+	public function update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation){
 		
-		/*$doc = mysql_query("select document from person where document = '$document' and `status` = '1'");
+		$doc = mysql_query("select document from person where id = '$id'");
 		$doc = mysql_fetch_array($doc);
 		$doc = $doc["document"];
-
+		/*
 		if($document != $doc)
 		{
-			mysql_query("update person set document = '$document' where document = '$doc'");
 		}*/
+		mysql_query("update person set document = '$document' where document = '$doc'");
 
 		#get max id
 		$maxId = mysql_query("select max(id) as id from person");
@@ -94,7 +94,8 @@ class person extends initial {
 				where person.document = '$document'
 				and person.church = church.id
 				and church.city = city.id
-				and circuit.id = church.circuit";
+				and circuit.id = church.circuit
+				order by person.id desc";
 
 		return $this->getAllRows($sql);
 	}

@@ -95,24 +95,24 @@
            
           </ul>
           <ul class="nav navbar-nav pull-right">
-              <li class="dropdown">
-                <a href class="dropdown-toggle" data-toggle="dropdown" ng-if='user'>
-                  Hola: {{user}} <b class="caret"></b>
-                </a>
-                <a href class="dropdown-toggle" data-toggle="dropdown" ng-if='!user'>
-                  Desconectad@</b>
-                </a>
-                <ul class="dropdown-menu" ng-if='user'>
-                  <li><a href>Cambiar pass</a></li>
-                  <li class="divider"></li>
-                  <li><a href='#/logout'>Salir</a></li>
-                </ul>
-              </li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
+            <li class="dropdown">
+              <a href class="dropdown-toggle" data-toggle="dropdown" ng-if='user'>
+                Hola: {{user}} <b class="caret"></b>
+              </a>
+              <a href class="dropdown-toggle" data-toggle="dropdown" ng-if='!user'>
+                Desconectad@</b>
+              </a>
+              <ul class="dropdown-menu" ng-if='user'>
+                <li><a href='#/update-pass'>Cambiar pass</a></li>
+                <li class="divider"></li>
+                <li><a href='#/logout'>Salir</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
       </div>
     </div>
+  </div>
 
     <div class="container-fluid">
       <div class="row-fluid">

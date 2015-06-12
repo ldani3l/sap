@@ -23,14 +23,41 @@ switch($action){
         echo "[]";*/
     break;
 
+    case 'newUser':
+        $data = json_decode(file_get_contents("php://input"));
+        
+        $type = $data->type;
+        $email = $data->email;
+        $user = $data->user;
+        $pass = $data->pass;
+
+        $u = new user();
+        $urls = $u->newUser($user, $pass, $email, $type);
+        echo $urls;
+
+    break;
+
+    case 'getUsers':
+        $u = new user();
+        $urls = $u->getUsers();
+        echo json_encode($urls);
+    break;
+
+    case 'updatePass':
+        $data = json_decode(file_get_contents("php://input"));
+        $pass = $data->pass;
+        $user = $data->user;
+        $u = new user();
+        $urls = $u->updatePass($user, $pass);
+        echo $urls;
+    break;
+
     case 'getUrls':
         $data = json_decode(file_get_contents("php://input"));
         $type = $data->type;
         $u = new user();
         $urls = $u->getUrls($type);
         echo json_encode($urls);
-        //session_start();
-        //$_SESSION["idUsuario"] = $tipo["user"];
     break;
 }
 ?>

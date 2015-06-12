@@ -40,13 +40,77 @@
 		
 	}]);
 
-	app.controller('user-reset', ['personService', '$scope', function(personService, $scope) {
+	app.controller('update-pass', ['session', '$scope', '$rootScope', function(session, $scope, $rootScope) {
 		
+		$scope.save = function(){
+			session.updatePass($rootScope.user, $scope.pass).then(function(data){
+				if( data == 'ok' )
+				{
+					$scope.mjs = "La información fue guardada correctamente.";
+					$scope.class = "btn btn-success";
+					$('#myModal').modal('show');
+				}
+				else
+				{
+					$scope.mjs = data +  " No fue posible guardar la información.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+			});
+		}
+
+	}]);
+
+	app.controller('user-reset', ['session', '$scope', function(session, $scope) {
+		$scope.setPass = function(){
+			$scope.pass = session.RandomPassword(8, true, true, true);
+		}
+
+		$scope.save = function(){
+			session.updatePass($scope.user, $scope.pass).then(function(data){
+				if( data == 'ok' )
+				{
+					$scope.mjs = "La información fue guardada correctamente.";
+					$scope.class = "btn btn-success";
+					$('#myModal').modal('show');
+				}
+				else
+				{
+					$scope.mjs = data +  " No fue posible guardar la información.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+			});
+		}
+
+		session.getUsers().then(function(data){
+			$scope.users = data;
+		});
 		
 	}]);
 
-	app.controller('user-new', ['personService', '$scope', function(personService, $scope) {
-		
+	app.controller('user-new', ['session', '$scope', function(session, $scope) {
+
+		$scope.save = function(){
+			session.newUser($scope.user, $scope.pass, $scope.type, $scope.email).then(function(data){
+				if( data == 'ok' )
+				{
+					$scope.mjs = "La información fue guardada correctamente.";
+					$scope.class = "btn btn-success";
+					$('#myModal').modal('show');
+				}
+				else
+				{
+					$scope.mjs = data +  " No fue posible guardar la información.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+			});
+		}
+
+		$scope.setPass = function(){
+			$scope.pass = session.RandomPassword(8, true, true, true);
+		}
 
 	}]);
 
@@ -345,7 +409,7 @@
 				$('#myModal').modal('show');
 			}
 			else{
-				personService.updatePerson($scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.church, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity, $rootScope.user, $scope.affiliation).then(function(data){
+				personService.updatePerson($scope.id, $scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.church, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity, $rootScope.user, $scope.affiliation).then(function(data){
 					if( data != 'na' )
 					{
 						$scope.mjs = "La información fue guardada correctamente.";

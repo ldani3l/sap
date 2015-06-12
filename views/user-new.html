@@ -4,27 +4,27 @@
 		<table class="table table-hover">
 			<tr>
 				<td>Nombre usuario</td>
-				<td><input type="text" ng-model='document' ng-blur='buscar()' placeholder='Nombre de usuario'></td>
+				<td><input type="text" ng-model='user' ng-blur='setPass()' placeholder='Nombre de usuario' required></td>
 			</tr>
 			<tr>
-				<td>password</td>
-				<td><input type="password" ng-model='pass1' placeholder='Password'></td>
+				<td>Password</td>
+				<td><input type="text" ng-model='pass' disabled placeholder='Password'></td>
 			</tr>
-			<tr>
+			<!--<tr>
 				<td>Repetir password</td>
 				<td><input type="password" ng-model='pass2' placeholder='Repite el password'></td>
-			</tr>
+			</tr>-->
 			<tr>
 				<td>Email</td>
-				<td><input type="email" ng-model='email' placeholder='Email' ></td>
+				<td><input type="email" ng-model='email' placeholder='Email' required></td>
 			</tr>
 			<tr>
 				<td>Tipo</td>
 				<td>
-					<select ng-model="type" id="">
+					<select ng-model="type" id="" required>
 						<option value="" selected disabled>Selecciona:</option>
-						<option value="USUARIO">USUARIO</option>
-						<option value="ADMINISTRADOR">ADMINISTRADOR</option>
+						<option value="user">USUARIO</option>
+						<option value="admin">ADMINISTRADOR</option>
 					</select>
 				</td>
 			</tr>

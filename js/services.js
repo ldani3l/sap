@@ -67,6 +67,104 @@
     // ---------------------- SESSION -------------------------
   app.factory("session", ["$http", "$q", "$rootScope", function($http, $q, $rootScope){
 
+    function getUsers(){
+        var deferred = $q.defer();
+        
+          $http.get( 'php/user/viewUser.php?action=getUsers')
+          .success(function(data){
+              deferred.resolve(data);
+          });
+        return deferred.promise;
+      }
+
+  function RandomPassword(Length, Upper, Numbers, Lower)
+  {
+      Upper = typeof(Upper) != 'undefined' ? Upper : true;
+      Numbers = typeof(Numbers) != 'undefined' ? Numbers : true;
+      Lower = typeof(Lower) != 'undefined' ? Lower : true;
+       
+      if (!Upper && !Lower && !Numbers)
+          return "";
+   
+      var Ret = "";
+      var Num;
+      var Repeat;
+   
+      Chars = 26 * 2 + 10;    //26 (a-z) + 26 (A-Z) + 10 (0-9)
+      //a-z = 97-122
+      //A-Z = 65-90
+      //0-9 = 48-57
+   
+      for (i = 1; i <= Length; i++)
+      {
+          Repeat = false;
+   
+          Num = Math.floor(Math.random()*Chars);
+   
+          if (Num < 26)
+              if (Lower)
+                  Ret = Ret + String.fromCharCode(Num + 97);
+              else
+                  Repeat = true;
+          else if (Num < 52)
+              if (Upper)
+                  Ret = Ret + String.fromCharCode(Num - 26 + 65);
+              else
+                  Repeat = true;
+          else if (Num < 62)
+              if (Numbers)
+                  Ret = Ret + String.fromCharCode(Num - 52 + 48);
+              else
+                  Repeat = true;
+   
+          if (Repeat)
+              i--;
+      }
+      return Ret;
+  }
+
+    function newUser(user, pass, type, email) {
+        var deferred = $q.defer();
+        
+        var FormData = {
+          user: user,
+          pass: pass,
+          type: type,
+          email: email
+        };
+                 
+        $http({
+            method: 'POST',
+            url: 'php/user/viewUser.php?action=newUser',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+          .success(function (data){
+            deferred.resolve(data);
+          });
+        return deferred.promise;
+    }
+
+    function updatePass(user, pass) {
+        var deferred = $q.defer();
+        
+        var FormData = {
+            user: user,
+            pass: pass
+        };
+                 
+        $http({
+            method: 'POST',
+            url: 'php/user/viewUser.php?action=updatePass',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+          .success(function (data){
+            deferred.resolve(data);
+          });
+        return deferred.promise;
+    }
+
     function login(user, pass) {
         var deferred = $q.defer();
         
@@ -106,6 +204,10 @@
     }
 
     return{
+      updatePass: updatePass,
+      getUsers: getUsers,
+      RandomPassword: RandomPassword,
+      newUser: newUser,
       login: login,
       getUrls: getUrls
     }
@@ -383,10 +485,11 @@
         return deferred.promise;
       }
 
-      function updatePerson(document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation) {
+      function updatePerson(id, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation) {
         var deferred = $q.defer();
         
         var FormData = {
+            id: id,
             document: document,
             names: names,
             lastnames: lastnames,
