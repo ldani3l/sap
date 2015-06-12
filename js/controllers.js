@@ -35,11 +35,6 @@
 		
 	}]);
 
-	app.controller('church-search', ['personService', '$scope', function(personService, $scope) {
-		
-		
-	}]);
-
 	app.controller('report-event-user', ['personService', '$scope', function(personService, $scope) {
 		
 		
@@ -56,13 +51,185 @@
 	}]);
 
 
-	app.controller('event-register', ['personService', '$scope', function(personService, $scope) {
-		
-		
+	app.controller('event-register', ['event', '$scope', 'personService', '$rootScope', function(event, $scope, personService, $rootScope) {
+		$scope.LookForPerson = function(){
+			personService.getPerson($scope.document, '', '').then(function(data){
+				if(data.length > 0)
+				{
+					$scope.names = "";
+					data.forEach(function(d){
+						$scope.names = d.names + " " + d.lastnames;
+					});
+				}
+				else
+					$scope.names = "Sin resultados.";
+			});		
+		}
+
+		$scope.save = function(){
+			event.register($scope.participation, $scope.document, $scope.idPrice, $rootScope.user).then(function(data){
+				if( data != 'na' )
+				{
+					$scope.consecutive = data;
+					$scope.price = $("#idPrice option:selected").text();
+					$('#comprobante').modal('show');
+				}
+				else
+				{
+					$scope.mjs = data +  " No fue posible guardar la información.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+			});
+		}
+
+		event.getActualEvent().then(function(data){
+			$scope.events = data;
+			data.forEach(function(d){
+				$scope.nameEvent = d.name;
+				$scope.event = d.event;
+			});
+		});
 	}]);
 
-	app.controller('event-new', ['personService', '$scope', function(personService, $scope) {
+	app.controller('event-new', ['event', '$scope', function(event, $scope) {
 		
+		$scope.save = function(){
+			//console.log($scope.name + $scope.date + $scope.price);
+			event.eventNew($scope.name, $scope.date, $scope.price).then(function(data){
+				if( data == 'ok' )
+				{
+					$scope.mjs = "La información fue guardada correctamente.";
+					$scope.class = "btn btn-success";
+					$('#myModal').modal('show');
+				}
+				else
+				{
+					$scope.mjs = data +  " No fue posible guardar la información.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+			});
+		}
+
+	}]);
+
+	app.controller('church-search', ['circuitService', '$scope', 'zoneService', 'churchService', 
+		function(circuitService, $scope, zoneService, churchService) {
+		$scope.churchSearch = function(){
+			churchService.churchSearch($scope.name, $scope.circuit, $scope.zone).then(function(data){
+				$scope.churches = data;
+			});
+		}
+
+		zoneService.getAllZone().then(function(data){
+			$scope.zones = data;
+		});
+
+		$scope.getCircuitByZone = function(){
+			circuitService.getByZone($scope.zone).then(function(data){
+				$scope.circuits = data;
+			});
+		}
+	}]);
+
+	app.controller('church-update', ['circuitService', '$scope', 'zoneService', 'departmentService', 'cityService', '$routeParams', 'churchService',
+		function(circuitService, $scope, zoneService, departmentService, cityService, $routeParams, churchService) {
+		$scope.id = $routeParams.id;
+
+		$scope.saveChurch = function(){
+			//console.log($("#statusICM").val()+ " - "+ $("#yearDedication").val());
+			if($("#statusICM").val() == 'DEDICADO' && $("#yearDedication").val() == '')
+			{
+				$scope.mjs = "Faltan algunos datos.";
+				$scope.class = "btn btn-warning";
+				$('#myModal').modal('show');
+			}
+			else
+			churchService.churchUpdate($scope.id, $scope.name, $scope.category, $scope.address, $scope.phone, $scope.cellular, $scope.vereda, $scope.email, $scope.countMembers, $scope.personeria, $scope.circuit, $scope.city, $scope.statusICM, $scope.yearDedication, $scope.nit, $scope.user).then(function(data){
+				if( data == 'ok' )
+				{
+					$scope.mjs = "La información fue guardada correctamente.";
+					$scope.class = "btn btn-success";
+					$('#myModal').modal('show');
+				}
+				else
+				{
+					$scope.mjs = " No fue posible guardar la información.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+			});
+		}
+
+		$scope.updateYear = function(){
+			if($scope.statusICM == 'DEDICADO')
+				$("#yearDedication").prop("disabled", false);
+			else{
+				$("#yearDedication").prop("disabled", true);
+				$("#yearDedication").val("");
+			}
+		}
+
+		departmentService.getAllDepartment().then(function(data){
+			$scope.departments = data;
+		});
+
+		churchService.churchGetById($scope.id).then(function(c){
+			$scope.name = c.name;
+			$scope.category = c.category;
+			$scope.address = c.address;
+			$scope.phone = c.phone;
+			$scope.cellular = c.cellular;
+			$scope.vereda = c.vereda;
+			$scope.email = c.email;
+			$scope.countMembers = c.countMembers;
+			$scope.personeria = c.personeria;
+			if($scope.personeria = 'SI')
+				$("#nit").prop("disabled", false);
+			$scope.department = c.department;
+			$scope.statusICM = c.statusICM;
+			if($scope.statusICM = 'DEDICADO')
+				$("#yearDedication").prop("disabled", false);
+			$scope.yearDedication = c.yearDedication;
+			$scope.nit = c.nit;
+			$scope.user = c.user;
+			$scope.zone = c.zone;
+			circuitService.getByZone($scope.zone).then(function(data){
+				$scope.circuits = data;
+			});
+			cityService.getCityByDepartment($scope.department).then(function(data){
+				$scope.cities = data;
+			});
+			$scope.city = c.city;
+			$scope.circuit = c.circuit;
+
+		});
+
+		$scope.loadCity = function(){
+			cityService.getCityByDepartment($scope.department).then(function(data){
+				$scope.cities = data;
+			});
+		}
+
+		$scope.getCircuitByZone = function(){
+			circuitService.getByZone($scope.zone).then(function(data){
+				$scope.circuits = data;
+			});
+		}
+
+		$scope.validNit = function(){
+			if($scope.personeria=='SI')
+				$("#nit").prop("disabled",false);
+			else{
+				$("#nit").val("");
+				$("#nit").prop("disabled",true);
+			}
+		}
+
+		zoneService.getAllZone().then(function(data){
+			$scope.zones = data;
+		});
 
 	}]);
 
@@ -70,7 +237,33 @@
 	app.controller('church-new', ['circuitService', '$scope', 'zoneService', 'departmentService', 'cityService', 'churchService',
 		function(circuitService, $scope, zoneService, departmentService, cityService, churchService) {
 
-		($scope.name, $scope.category, $scope.address, $scope.phone, $scope.cellular, $scope.vereda, $scope.email, $scope.countMembers, $scope.personeria, $scope.circuit, $scope.city, $scope.statusICM, $scope.yearDedication, $scope.status, $scope.nit, $scope.user, $scope.affiliation)
+		$scope.saveChurch = function(){
+			churchService.churchNew($scope.name, $scope.category, $scope.address, $scope.phone, $scope.cellular, $scope.vereda, $scope.email, $scope.countMembers, $scope.personeria, $scope.circuit, $scope.city, $scope.statusICM, $scope.yearDedication, $scope.nit, $scope.user).then(function(data){
+				if( data == 'ok' )
+				{
+					$scope.mjs = "La información fue guardada correctamente.";
+					$scope.class = "btn btn-success";
+					$('#myModal').modal('show');
+				}
+				else
+				{
+					$scope.mjs = data + " No fue posible guardar la información.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+			});
+		}
+
+
+		$scope.updateYear = function(){
+			if($scope.statusICM == 'DEDICADO')
+				$("#yearDedication").prop("disabled", false);
+			else{
+				$("#yearDedication").prop("disabled", true);
+				$("#yearDedication").val("");
+			}
+		}
+
 
 		$scope.loadCity = function(){
 			cityService.getCityByDepartment($scope.department).then(function(data){
@@ -139,23 +332,35 @@
 		});
 
 		$scope.save = function (){
-			personService.updatePerson($scope.id, $scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.churchs, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity, $rootScope.user, $scope.affiliation).then(function(data){
-				if( data == 'na' )
-				{
-					$scope.mjs = "No fue posible guardar la información.";
-					$scope.class = "btn btn-warning";
-					$('#myModal').modal('show');
-				}
-				else
-				{
-					$scope.id = data;
-					$scope.mjs = "La información fue guardada correctamente.";
-					$scope.class = "btn btn-success";
-					$('#myModal').modal('show');
-				}
-			});
+			if($scope.typePerson == 'PASTOR' && ($("#theologicalLevel").val() == '' || $("#pastoralLevel").val() == ''))
+			{
+				$scope.mjs = "Faltan por llenar algunos campos.";
+				$scope.class = "btn btn-warning";
+				$('#myModal').modal('show');
+			}
+			else if($("#socialSecurity").val() == 'SI' && ($("#affiliation").val() == '' || $("#affiliation").val() == null))
+			{
+				$scope.mjs = "Faltan por llenar algunos campos.";
+				$scope.class = "btn btn-warning";
+				$('#myModal').modal('show');
+			}
+			else{
+				personService.updatePerson($scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.church, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity, $rootScope.user, $scope.affiliation).then(function(data){
+					if( data != 'na' )
+					{
+						$scope.mjs = "La información fue guardada correctamente.";
+						$scope.class = "btn btn-success";
+						$('#myModal').modal('show');
+					}
+					else
+					{
+						$scope.mjs = " No fue posible guardar la información.";
+						$scope.class = "btn btn-warning";
+						$('#myModal').modal('show');
+					}
+				});
+			}
 		}
-
 		
 		personService.getPerson($scope.document, '', '').then(function(data){
 			data.forEach(function(p){
@@ -185,24 +390,33 @@
 				});
 				$scope.circuit = p.idCircuit;
 				$("#birthdate").val(p.birthdate);
+				if($scope.socialSecurity == 'SI'){
+					$("#affiliation").prop('disabled', false);
+					$scope.affiliation = p.affiliation;
+				}
 			});
-			if($scope.socialSecurity == 'SI')
-				$("#socialSecurity").attr('checked', true);
-			$scope.churches = [{ "id": $scope.idChurch, "name": $scope.church }];
-			$scope.churchs = $scope.idChurch;
-			console.log($scope.churches);
+			churchService.getByCircuit($scope.circuit).then(function(data){
+				$scope.churches = data;
+			});
+			//$scope.churches = [{ "id": $scope.idChurch, "name": $scope.church }];
+			$scope.church = $scope.idChurch;
+			//console.log($scope.churches);
 		});
 
 	}]);
 
-	app.controller('person-new', ['personService', '$scope', 'zoneService', 'circuitService', 'churchService',
-		function(personService, $scope, zoneService, circuitService, churchService){
+	app.controller('person-new', ['personService', '$scope', 'zoneService', 'circuitService', 'churchService', '$rootScope',
+		function(personService, $scope, zoneService, circuitService, churchService, $rootScope){
 
 		$scope.buscar = function(){
 			personService.getPerson($scope.document, '', '').then(function(data){
 				if(data.length > 0)
 				{
-					$scope.mjs = "La persona ya existe.";
+					name = "";
+					data.forEach(function(d){
+						name = d.names + " " + d.lastnames;
+					});
+					$scope.mjs = "La persona "+ name +" ya existe.";
 					$scope.class = "btn btn-warning";
 					$('#myModal').modal('show');
 				}
@@ -210,27 +424,54 @@
 		}
 
 		$scope.enableAffiliation = function(){
-			if($scope.socialSecurity=='SI')
+			if($scope.socialSecurity=='SI'){
 				$("#affiliation").prop("disabled",false);
+			}
 			else{
 				$("#affiliation").val("");
 				$("#affiliation").prop("disabled",true);
 			}
 		}
-		
-		$scope.save = function (){
-			personService.newPerson($scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.churchs, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity, $scope.affiliation).then(function(data){
-				if( data == 'ok' )
+
+		$scope.save = function(){
+			personService.getPerson($scope.document, '', '').then(function(data){
+				if(data.length > 0)
 				{
-					$scope.mjs = "La información fue guardada correctamente.";
-					$scope.class = "btn btn-success";
-					$('#myModal').modal('show');
-				}
-				else
-				{
-					$scope.mjs = "No fue posible guardar la información.";
+					name = "";
+					data.forEach(function(d){
+						name = d.names + " " + d.lastnames;
+					});
+					$scope.mjs = "La persona "+ name +" ya existe.";
 					$scope.class = "btn btn-warning";
 					$('#myModal').modal('show');
+				}
+				else if($scope.typePerson == 'PASTOR' && ($("#theologicalLevel").val() == '' || $("#pastoralLevel").val() == ''))
+				{
+					$scope.mjs = "Faltan por llenar algunos campos.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+				else if($("#socialSecurity").val() == 'SI' && ($("#affiliation").val() == '' || $("#affiliation").val() == null))
+				{
+					$scope.mjs = "Faltan por llenar algunos campos.";
+					$scope.class = "btn btn-warning";
+					$('#myModal').modal('show');
+				}
+				else{
+					personService.newPerson($scope.document, $scope.names, $scope.lastnames, $scope.sex, $scope.churchs, $scope.phone, $scope.email, $scope.startMinistry, $scope.dateIn, $scope.theologicalLevel, $scope.typePerson, $scope.pastoralLevel, $scope.maritalStatus, $scope.academicLevel, $scope.typeHome, $("#birthdate").val(), $scope.socialSecurity, $rootScope.user, $scope.affiliation).then(function(data){
+						if( data == 'ok' )
+						{
+							$scope.mjs = "La información fue guardada correctamente.";
+							$scope.class = "btn btn-success";
+							$('#myModal').modal('show');
+						}
+						else
+						{
+							$scope.mjs = "No fue posible guardar la información.";
+							$scope.class = "btn btn-warning";
+							$('#myModal').modal('show');
+						}
+					});
 				}
 			});
 		}
@@ -267,6 +508,10 @@
 
 		personService.getPerson($scope.document, '', '').then(function(data){
 			$scope.person = data;
+			$scope.names = "";
+			data.forEach(function(d){
+				$scope.names = d.names + " " + d.lastnames;
+			});
 		});
 
 		personService.getPersonHistory($scope.document).then(function(data){

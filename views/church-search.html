@@ -1,6 +1,6 @@
 <div class="span12">
 	<h2>Buscar iglesia</h2>
-	<form ng-submit='save()'>
+	<form ng-submit='churchSearch()'>
 		<table class="table table-hover">
 			<tr>
 				<td>Zona</td>
@@ -10,12 +10,12 @@
 			</tr>
 			<tr>
 				<td>
-					<select ng-model="zone" ng-change='getCircuitByZone()'>
+					<select ng-model="zone" id="zone" ng-change='getCircuitByZone()'>
 						<option ng-repeat='z in zones' value="{{z.id}}">{{ z.name }}</option>
 					</select>
 				</td>
 				<td>
-					<select ng-model="circuit" ng-change='getChurchesByCircuit()'>
+					<select ng-model="circuit" id="circuit">
 						<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>
 					</select>
 				</td>
@@ -24,5 +24,28 @@
 			</tr>
 		</table>
 	</form>
+	<h4>{{ churches.length }} resultados encontrados.</h4>
+	<table class="table table-hover">
+		<tr>
+			<th>Nombre</th>
+			<th>Zona</th>
+			<th>Circuito</th>
+			<th>Ciudad</th>
+			<th>Vereda</th>
+			<th>Categoría</th>
+			<th>Dirección</th>
+			<th>Editar</th>
+		</tr>
+		<tr ng-repeat='c in churches'>
+			<td>{{c.name}}</td>
+			<td>{{c.zone}}</td>
+			<td>{{c.nameCircuit}}</td>
+			<td>{{c.nameCity}}</td>
+			<td>{{c.vereda}}</td>
+			<td>{{c.category}}</td>
+			<td>{{c.address}}</td>
+			<td><a href="#/church-update/{{c.id}}"><i class='icon-edit'></i></a></td>
+		</tr>
+	</table>
 </div>
 <div ng-include="'partials/modal-window.html'"></div>

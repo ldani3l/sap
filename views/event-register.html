@@ -4,21 +4,46 @@
 		<table class="table table-hover">
 			<tr>
 				<td>Documento</td>
-				<td><input type="text" ng-model='document' ng-blur='buscar()' placeholder='Documento'></td>
+				<td><input type="text" ng-model='document' ng-blur='LookForPerson()' placeholder='Documento' required></td>
+			</tr>
+			<tr>
+				<td>Participante</td>
+				<td>{{ names }}</td>
 			</tr>
 			<tr>
 				<td>Evento</td>
 				<td>
-					<select name="" id="">
-						<option value="">Selecciona el evento</option>
+					{{ nameEvent }}
+					<input type="hidden" value="{{ event }}" id="event">
+				</td>
+			</tr>
+			<tr>
+				<td>Participación</td>
+				<td>
+					<select ng-model="participation" id="">
+						<option value="" selected="">Seleciona:</option>
+						<option value="DELEGADO">DELEGADO</option>
+						<option value="ASISTENTE">ASISTENTE</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Precios</td>
+				<td>
+					<select ng-model="idPrice" id="idPrice" required>
+						<option value="{{ p.id }}" ng-repeat='p in events'> {{ p.price }} - {{p.description}} </option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" class='btn btn-primary' value="Guardar"></td>
+				<td>
+					<input type="submit" class='btn btn-primary' value="Guardar">
+					<!--<button type="buttom" class='btn btn-info' ng-if='print'>Imprimir</button>-->
+				</td>
 			</tr>
 		</table>
 	</form>
 </div>
 <div ng-include="'partials/modal-window.html'"></div>
+<div ng-include="'partials/comprobante.html'"></div>

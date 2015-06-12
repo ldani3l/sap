@@ -1,28 +1,28 @@
 <div class="span4 offset4">
 	<h2>Nueva persona</h2>
-	<form ng-submit='save()'>
+	<form ng-submit='save()' novalidate name='person'>
 		<table class="table table-hover">
 			<tr>
 				<td>Documento</td>
-				<td><input type="text" ng-model='document' ng-blur='buscar()' placeholder='Documento'></td>
+				<td><input type="text" ng-model='document' required ng-blur='buscar()' placeholder='Documento' autofocus></td>
 			</tr>
 			<tr>
 				<td>Nombres</td>
-				<td><input type="text" ng-model='names' placeholder='Nombres'></td>
+				<td><input type="text" ng-model='names' placeholder='Nombres' required></td>
 			</tr>
 			<tr>
 				<td>Apellidos</td>
-				<td><input type="text" ng-model='lastnames' placeholder='Apellidos'></td>
+				<td><input type="text" ng-model='lastnames' placeholder='Apellidos' required></td>
 			</tr>
 			<tr>
 				<td>Fecha de nacimiento</td>
-				<td><input type="date" id="birthdate"/></td>
+				<td><input type="date" id="birthdate" required /></td>
 			</tr>
 			<tr>
 				<td>Sexo</td>
 				<td>
-					<select name="" ng-model='sex' id="">
-						<!--<option value="" selected disabled></option>-->
+					<select ng-model='sex' required>
+						<option value="" selected>Seleccionar:</option>
 						<option value="MASCULINO">MASCULINO</option>
 						<option value="FEMENINO">FEMENINO</option>
 					</select>
@@ -31,7 +31,7 @@
 			<tr>
 				<td>Zona</td>
 				<td>
-					<select ng-model="zone" ng-change='getCircuitByZone()'>
+					<select ng-model="zone" ng-change='getCircuitByZone()' required>
 						<option ng-repeat='z in zones' value="{{z.id}}">{{ z.name }}</option>
 					</select>
 				</td>
@@ -39,7 +39,7 @@
 			<tr>
 				<td>Circuito</td>
 				<td>
-					<select ng-model="circuit" ng-change='getChurchesByCircuit()'>
+					<select ng-model="circuit" ng-change='getChurchesByCircuit()' required>
 						<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>
 					</select>
 				</td>
@@ -47,14 +47,14 @@
 			<tr>
 				<td>Iglesia</td>
 				<td>
-					<select ng-model='churchs' id="church">
+					<select ng-model='churchs' id="church" required>
 						<option ng-repeat='c in churches' value="{{c.id}}">{{c.name}}</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td>Teléfono</td>
-				<td><input type="text" ng-model='phone' placeholder='Telefono'/></td>
+				<td><input type="text" ng-model='phone' placeholder='Telefono' required/></td>
 			</tr>
 			<tr>
 				<td>Correo</td>
@@ -62,12 +62,24 @@
 			</tr>
 			<tr>
 				<td>Inicio en el ministerio</td>
-				<td><input type="text" ng-model='startMinistry' placeholder='Inicio en el ministerio'/></td>
+				<td><input type="text" ng-model='startMinistry' placeholder='Inicio en el ministerio' required/></td>
+			</tr>
+			<tr>
+				<td>Tipo</td>
+				<td>
+					<select ng-model="typePerson" required>
+						<option value="" selected="">Seleccionar:</option>
+						<option value="PASTOR">PASTOR</option>
+						<option value="CO-PASTOR">CO-PASTOR</option>
+						<option value="ESPOSA DE PASTOR">ESPOSA DE PASTOR</option>
+						<option value="LIDER">LIDER</option>
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>Nivel teológico</td>
 				<td>
-					<select ng-model="theologicalLevel">
+					<select ng-model="theologicalLevel" id="theologicalLevel">
 						<option value="" selected="">Selecionar:</option>
 						<option value="CIPEP - NIVEL BASICO">CIPEP - NIVEL BASICO</option>
 						<option value="CIPEP - NIVEL MEDIO">CIPEP - NIVEL MEDIO</option>
@@ -79,21 +91,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Tipo</td>
-				<td>
-					<select ng-model="typePerson">
-						<option value="" selected="">Seleccionar:</option>
-						<option value="PASTOR">PASTOR</option>
-						<option value="CO-PASTOR">CO-PASTOR</option>
-						<option value="ESPOSA DE PASTOR">ESPOSA DE PASTOR</option>
-						<option value="LIDER">LIDER</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
 				<td>Grado pastoral</td>
 				<td>
-					<select ng-model="pastoralLevel">
+					<select ng-model="pastoralLevel" id="pastoralLevel">
 						<option value="" selected="">Seleccionar:</option>
 						<option value="OBRERO">OBRERO</option>
 						<option value="EN FORMACIÓN">EN FORMACIÓN</option>
@@ -106,7 +106,7 @@
 			<tr>
 				<td>Estado civil</td>
 				<td>
-					<select ng-model="maritalStatus">
+					<select ng-model="maritalStatus" required>
 						<option selected="" value="">Estado Civil:</option>
 						<option value="SOLTERO">SOLTERO</option>
 						<option value="CASADO">CASADO</option>
@@ -120,7 +120,7 @@
 			<tr>
 				<td>Nivel académico</td>
 				<td>
-					<select ng-model="academicLevel">
+					<select ng-model="academicLevel" required>
 						<option selected="" value="">Nivel académico:</option>
 						<option value="BÁSICA PRIMARIA">BÁSICA PRIMARIA</option>
 						<option value="SECUNDARIA INCOMPLETA">SECUNDARIA INCOMPLETA</option>
@@ -135,7 +135,7 @@
 			<tr>
 				<td>Seguridad social</td>
 				<td>
-					<select ng-model="socialSecurity" ng-change='enableAffiliation()'>
+					<select ng-model="socialSecurity" id="socialSecurity" ng-change='enableAffiliation()' required>
 						<option selected="" value="" disabled>Seguridad Social:</option>
 						<option value="SI">SI</option>
 						<option value="NO">NO</option>
@@ -154,9 +154,9 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Casa</td>
+				<td>Tiene casa propia?</td>
 				<td> 
-					<select ng-model="typeHome">
+					<select ng-model="typeHome" required>
 						<option value="" selected="">Seleccionar:</option>
 						<option value="PROPIA">PROPIA</option>
 						<option value="ARRENDADA">ARRENDADA</option>
@@ -165,7 +165,7 @@
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" class='btn btn-primary' value="Guardar"></td>
+				<td><input type="submit" class='btn btn-primary' value="Guardar" ng-disabled='person.$invalid'></td>
 			</tr>
 		</table>
 	</form>

@@ -2,6 +2,67 @@
 
   var app = angular.module('sap.services', []);
 
+    // ---------------------- SESSION -------------------------
+  app.factory("event", ["$http", "$q", function($http, $q){
+    
+    function getActualEvent() {
+        var deferred = $q.defer();
+        $http.get('php/event/viewEvent.php?action=getEvent')
+          .success(function (data){
+            deferred.resolve(data);
+          });
+        return deferred.promise;
+    }
+
+    function register(participation, document, idPrice, user) {
+        var deferred = $q.defer();
+        
+        var FormData = {
+            participation: participation,
+            document: document,
+            user: user,
+            idPrice: idPrice
+        };
+
+        $http({
+            method: 'POST',
+            url: 'php/event/viewEvent.php?action=register',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+          .success(function (data){
+            deferred.resolve(data);
+          });
+        return deferred.promise;
+    }
+
+    function eventNew(name, date, price) {
+        var deferred = $q.defer();
+        
+        var FormData = {
+            name: name,
+            date: date,
+            price: price
+        };
+
+        $http({
+            method: 'POST',
+            url: 'php/event/viewEvent.php?action=eventNew',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+          .success(function (data){
+            deferred.resolve(data);
+          });
+        return deferred.promise;
+    }
+    return{
+      register: register,
+      getActualEvent: getActualEvent,
+      eventNew: eventNew
+    }
+  }]);
+
 
     // ---------------------- SESSION -------------------------
   app.factory("session", ["$http", "$q", "$rootScope", function($http, $q, $rootScope){
@@ -78,6 +139,20 @@
     // ---------------------- DEPARTMENT -------------------------
     app.factory('departmentService', ['$http', '$q', function ($http, $q) {
       
+      function getById(id){
+        var deferred = $q.defer();
+        
+          $http.get( 'php/department/vDepartment.php?action=getById', {
+            params:{
+              id: id
+            }
+          })
+          .success(function(data){
+              deferred.resolve(data);
+          });
+        return deferred.promise;
+      }
+
       function getAllDepartment(circuit){
         var deferred = $q.defer();
         
@@ -89,6 +164,7 @@
       }
 
       return{
+        getById: getById,
         getAllDepartment: getAllDepartment
       };
 
@@ -97,7 +173,43 @@
     // ---------------------- CHURCH -------------------------
     app.factory('churchService', ['$http', '$q', function ($http, $q) {
 
-    function churchUpdate(id, name, category, address, phone, cellular, vereda, email, countMembers, personeria, circuit, city, statusICM, yearDedication, status, nit, user, affiliation){
+    function churchGetById(id){
+      var deferred = $q.defer();
+        var FormData = {
+              id: id
+        };
+        $http({
+            method: 'POST',
+            url: 'php/church/vChurch.php?action=get',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+        .success(function(data){
+            deferred.resolve(data);
+        });
+      return deferred.promise;
+    }
+
+    function churchSearch(name, circuit, zone){
+      var deferred = $q.defer();
+        var FormData = {
+              name: name,
+              circuit: circuit,
+              zone: zone
+        };
+        $http({
+            method: 'POST',
+            url: 'php/church/vChurch.php?action=churchSearch',
+            data: FormData,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+          })
+        .success(function(data){
+            deferred.resolve(data);
+        });
+      return deferred.promise;
+    }
+
+    function churchUpdate(id, name, category, address, phone, cellular, vereda, email, countMembers, personeria, circuit, city, statusICM, yearDedication, nit, user){
       var deferred = $q.defer();
         var FormData = {
               id: id,
@@ -114,15 +226,13 @@
               city: city,
               statusICM: statusICM,
               yearDedication: yearDedication,
-              status: status,
               nit: nit,
               user: user,
-              affiliation: affiliation
         };
 
         $http({
             method: 'POST',
-            url: 'php/church/cChurch.php?action=churchUpdate',
+            url: 'php/church/vChurch.php?action=churchUpdate',
             data: FormData,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           })
@@ -132,7 +242,7 @@
       return deferred.promise;
     }
 
-    function churchNew(name, category, address, phone, cellular, vereda, email, countMembers, personeria, circuit, city, statusICM, yearDedication, status, nit, user, affiliation){
+    function churchNew(name, category, address, phone, cellular, vereda, email, countMembers, personeria, circuit, city, statusICM, yearDedication, nit, user){
       var deferred = $q.defer();
         var FormData = {
               name: name,
@@ -148,15 +258,13 @@
               city: city,
               statusICM: statusICM,
               yearDedication: yearDedication,
-              status: status,
               nit: nit,
-              user: user,
-              affiliation: affiliation
+              user: user
         };
 
         $http({
             method: 'POST',
-            url: 'php/church/cChurch.php?action=churchNew',
+            url: 'php/church/vChurch.php?action=churchNew',
             data: FormData,
             headers: {'Content-Type': 'application/x-www-form-urlencoded'}
           })
@@ -173,7 +281,7 @@
             params:{
               circuit: circuit
             }
-          } )
+          })
           .success(function(data){
               deferred.resolve(data);
           });
@@ -181,6 +289,8 @@
       }
 
       return{
+        churchGetById: churchGetById,
+        churchSearch: churchSearch,
         churchNew: churchNew,
         churchUpdate: churchUpdate,
         getByCircuit: getByCircuit
@@ -273,11 +383,10 @@
         return deferred.promise;
       }
 
-      function updatePerson(id, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation) {
+      function updatePerson(document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation) {
         var deferred = $q.defer();
         
         var FormData = {
-            id: id,
             document: document,
             names: names,
             lastnames: lastnames,

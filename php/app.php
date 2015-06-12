@@ -8,3 +8,4 @@ include_once "city/cCity.php";
 include_once "class/participation.php";
 include_once "person/cPerson.php";
 include_once "user/classUser.php";
+include_once "event/classEvent.php";

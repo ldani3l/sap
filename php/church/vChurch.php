@@ -6,6 +6,40 @@ header("Content-type:application/json");
 $action = $_GET["action"];
 
 switch($action){
+	case "get":
+		$data = json_decode(file_get_contents("php://input"));
+		
+		$id = $data->id;
+		$c = new church();
+		$json = $c->get($id);
+		echo json_encode($json);
+
+	break;
+	case "churchSearch":
+		$data = json_decode(file_get_contents("php://input"));
+		
+		$name = $data->name;
+		$circuit = $data->circuit;
+		$zone = $data->zone;
+
+		$c = new church();
+		if($zone && !$circuit && !$name)
+			$json = $c->getByZone($zone);
+		if($circuit && !$name)
+			$json = $c->getByCircuit($circuit);
+		if(!$zone && !$circuit && $name)
+			$json = $c->getByName($name);
+		elseif($zone && !$circuit && $name)
+			$json = $c->getByZoneAndName($zone, $name);
+		elseif($circuit && $name)
+			$json = $c->getByCircuitAndName($circuit, $name);
+		if($json == false)
+			echo "[]";
+		else
+			echo json_encode($json);
+		
+	break;
+	
 	case "churchUpdate":
 		$data = json_decode(file_get_contents("php://input"));
 		
@@ -22,14 +56,13 @@ switch($action){
 		$city = $data->city;
 		$statusICM = $data->statusICM;
 		$yearDedication = $data->yearDedication;
-		$status = $data->status;
 		$nit = $data->nit;
 		$user = $data->user;
-		$affiliation = $data->affiliation;
 		$id = $data->id;
 
 		$p = new church();
-		$json = $p->churchUpdate($id, $name,$category,$address,$phone,$cellular,$vereda,$email,$countMembers,$personeria,$circuit,$city,$statusICM,$yearDedication,$status,$nit,$user,$affiliation);
+		$json = $p->churchUpdate($id, $name,$category,$address,$phone,$cellular,$vereda,$email,$countMembers,$personeria,$circuit,$city,$statusICM,$yearDedication,$nit,$user);
+		echo $json;
 
 	break;
 
@@ -49,13 +82,13 @@ switch($action){
 		$city = $data->city;
 		$statusICM = $data->statusICM;
 		$yearDedication = $data->yearDedication;
-		$status = $data->status;
 		$nit = $data->nit;
 		$user = $data->user;
-		$affiliation = $data->affiliation;
 
 		$p = new church();
-		$json = $p->churchNew($name,$category,$address,$phone,$cellular,$vereda,$email,$countMembers,$personeria,$circuit,$city,$statusICM,$yearDedication,$status,$nit,$user,$affiliation);
+		$json = $p->churchNew($name,$category,$address,$phone,$cellular,$vereda,$email,$countMembers,$personeria,$circuit,$city,$statusICM,$yearDedication,$nit,$user);
+		
+		echo $json;
 
 	break;
 	case 'getByCircuit':

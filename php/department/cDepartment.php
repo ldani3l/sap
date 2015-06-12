@@ -9,5 +9,10 @@ class department extends initial {
 		return $this->getAllRows($sql);
 	}
 
+	public function getById($id){
+		$sql = "select * from department where id = '$id'";
+		return $this->getOneRow($sql);
+	}
+
 
 }

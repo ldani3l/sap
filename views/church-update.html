@@ -1,5 +1,5 @@
 <div class="span4 offset4">
-	<h2>Nueva iglesia</h2>
+	<h2>Actualizar iglesia</h2>
 	<form ng-submit='saveChurch()' novalidate name="churches">
 		<table class="table table-hover">
 			<tr>
@@ -13,7 +13,7 @@
 			<tr>
 				<td>Circuito</td>
 				<td>
-					<select ng-model="circuit" ng-change='getChurchesByCircuit()' required>
+					<select ng-model="circuit" id="circuit" required>
 						<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>
 					</select>
 				</td>
@@ -37,7 +37,7 @@
 			</tr>
 			<tr>
 				<td>Dirección</td>
-				<td><input type="text" ng-model='address' placeholder='Dirección' required /></td>
+				<td><input type="text" ng-model='address' placeholder='Dirección' required/></td>
 			</tr>
 			<tr>
 				<td>Telefono fijo</td>
@@ -59,7 +59,7 @@
 				<td>Personería juridica extendida</td>
 				<td>
 					<select ng-model="personeria" ng-change='validNit()' required>
-						<option selected value="" >Selecciona:</option>
+						<option selected disabled>Selecciona:</option>
 						<option value="SI">SI</option>
 						<option value="NO">NO</option>
 					</select>
@@ -68,7 +68,7 @@
 			<tr>
 				<td>NIT</td>
 				<td>
-					<input type="text" ng-model='nit' placeholder='NIT' disabled id="nit">
+					<input type="text" ng-model='nit' placeholder='NIT' ng-disabled='!nit' id="nit">
 				</td>
 			</tr>
 			<tr>
@@ -94,7 +94,7 @@
 			<tr>
 				<td>Estado ICM</td>
 				<td>
-					<select ng-model="statusICM" ng-change='updateYear()'>
+					<select ng-model="statusICM" id="statusICM" ng-change='updateYear()'>
 						<option value="" selected="">Seleccionar:</option>
 						<option value="EN SOLICITUD">EN SOLICITUD</option>
 						<option value="1 PAGO">1 PAGO</option>
@@ -106,11 +106,11 @@
 			</tr>
 			<tr>
 				<td>Año de dedicación</td>
-				<td><input type="text" ng-model='yearDedication' id="yearDedication" disabled placeholder='Año de dedicación' /></td>
+				<td><input type="text" ng-model='yearDedication' id='yearDedication' placeholder='Año de dedicación' /></td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" class='btn btn-primary' value="Guardar" ng-disabled='churches.$invalid'></td>
+				<td><input type="submit" class='btn btn-primary' value="Guardar"></td>
 			</tr>
 		</table>
 	</form>

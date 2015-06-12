@@ -37,6 +37,10 @@
         templateUrl: 'views/church-search.html',
         controller: 'church-search'
       })
+      .when('/church-update/:id', {
+        templateUrl: 'views/church-update.html',
+        controller: 'church-update'
+      })
       .when('/church-new', {
         templateUrl: 'views/church-new.html',
         controller: 'church-new'
@@ -99,7 +103,7 @@
   {
     $rootScope.$on('$routeChangeStart', function()
     {
-        checkStatus();
+        //checkStatus();
     });
 
   function checkStatus(){

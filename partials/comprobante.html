@@ -1,0 +1,52 @@
+<div id="comprobante" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3>Comprobante de inscripción</h3>
+  </div>
+  <div class="modal-body">
+ 
+    <table>
+      <tr>
+        <td><h4>Denominación Iglesias Evangélicas del Caribe</h4></td>
+        <td><img src="img/logo-aiec.png" alt=""></td>
+      </tr>
+    </table>
+    
+    <h5>Comprobante de inscripción</h5>
+    <table class="table table-bordered">
+      <tr>
+        <td>Documento:</td>
+        <td>{{document}}</td>
+      </tr>
+      <tr>
+        <td>Participante:</td>
+        <td>{{names}}</td>
+      </tr>
+      <tr>
+        <td>Participación:</td>
+        <td>{{participation}}</td>
+      </tr>
+      <tr>
+        <td>Valor cancelado:</td>
+        <td>{{price}}</td>
+      </tr>
+      <tr>
+        <td>Usuario:</td>
+        <td>{{user}}</td>
+      </tr>
+      <tr>
+        <td>Consecutivo:</td>
+        <td>{{consecutive}}</td>
+      </tr>
+    </table>
+    <table>
+      <tr>
+        <td>Firma usuario</td>
+        <td>_______________________</td>
+      </tr>
+    </table>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-success" data-dismiss="modal" aria-hidden="true">Aceptar</button>
+  </div>
+</div>
