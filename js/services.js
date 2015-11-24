@@ -67,6 +67,62 @@
     // ---------------------- SESSION -------------------------
   app.factory("session", ["$http", "$q", "$rootScope", function($http, $q, $rootScope){
 
+    function reportFilter(zone, accion, typePerson, participation, idPrice){
+      var deferred = $q.defer();
+      
+        $http.get('php/user/viewUser.php?action=reportFilters',{
+          params:{
+            zone: zone,
+            accion: accion,
+            typePerson: typePerson,
+            participation: participation,
+            idPrice: idPrice
+          }
+        })
+        .success(function(data){
+            deferred.resolve(data);
+        });
+      return deferred.promise;
+    }
+
+    function reportUser(user){
+      var deferred = $q.defer();
+      
+        $http.get('php/user/viewUser.php?action=reportUser',{
+          params: {
+            user: user
+          }
+        })
+        .success(function(data){
+            deferred.resolve(data);
+        });
+      return deferred.promise;
+    }
+
+    function getTypeUser(user){
+        var deferred = $q.defer();
+        
+          $http.get( 'php/user/viewUser.php?action=getTypeUser',{
+            params: {
+              user: user
+            }
+          })
+          .success(function(data){
+              deferred.resolve(data);
+          });
+        return deferred.promise;
+    }
+
+    function getDateTime(){
+        var deferred = $q.defer();
+        
+          $http.get( 'php/user/viewUser.php?action=getDateTime')
+          .success(function(data){
+              deferred.resolve(data);
+          });
+        return deferred.promise;
+    }
+
     function getUsers(){
         var deferred = $q.defer();
         
@@ -75,7 +131,7 @@
               deferred.resolve(data);
           });
         return deferred.promise;
-      }
+    }
 
   function RandomPassword(Length, Upper, Numbers, Lower)
   {
@@ -204,6 +260,10 @@
     }
 
     return{
+      reportFilter: reportFilter,
+      getTypeUser: getTypeUser,
+      getDateTime: getDateTime,
+      reportUser: reportUser,
       updatePass: updatePass,
       getUsers: getUsers,
       RandomPassword: RandomPassword,
@@ -448,7 +508,7 @@
     // ---------------------- PERSON -------------------------
     app.factory('personService', ['$http', '$q', function ($http, $q) {
 
-      function newPerson(document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation) {
+      function newPerson(document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation, whereLive) {
         var deferred = $q.defer();
         
         var FormData = {
@@ -470,7 +530,8 @@
             birthdate: birthdate,
             socialSecurity: socialSecurity,
             user: user,
-            affiliation: affiliation
+            affiliation: affiliation,
+            whereLive: whereLive
         };
                  
         $http({
@@ -485,7 +546,7 @@
         return deferred.promise;
       }
 
-      function updatePerson(id, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation) {
+      function updatePerson(id, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, typeHome, birthdate, socialSecurity, user, affiliation, whereLive) {
         var deferred = $q.defer();
         
         var FormData = {
@@ -508,7 +569,8 @@
             birthdate: birthdate,
             socialSecurity: socialSecurity,
             user: user,
-            affiliation: affiliation
+            affiliation: affiliation,
+            whereLive: whereLive
         };
                  
         $http({

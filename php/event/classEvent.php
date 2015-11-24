@@ -51,13 +51,15 @@ class event extends initial {
 
 	public function register($participation, $person, $idPrice, $user){
 
+		$fecha = date('Y-m-d');
+		$hora = date('G:i:s');
 		$maxId = mysql_query("select max(id) as id from participation");
 		$maxId = mysql_fetch_array($maxId);
 		$maxId = ++$maxId["id"];
-		$sql = mysql_query("insert into participation(id, idPrice, person, participation, user)
-							values ($maxId, '$idPrice','$person','$participation', '$user')");
+		$sql = mysql_query("insert into participation(id, idPrice, person, participation, user, date)
+							values ($maxId, '$idPrice','$person','$participation', '$user', '$fecha $hora')");
 		if($sql)
-			return $maxId;
+			return $maxId.",".$fecha." ".$hora;
 		else
 			return "na";
 	}

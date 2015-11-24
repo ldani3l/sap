@@ -4,12 +4,12 @@ class person extends initial {
 
 	public function __construct(){}
 
-	public function newPerson($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation){
+	public function newPerson($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation, $whereLive){
 		$maxId = mysql_query("select max(id) as id from person");
 		$maxId = mysql_fetch_array($maxId);
 		$maxId = ++$maxId["id"];
-		$data = mysql_query("insert into person(id, `status`, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, socialSecurity, typeHome, birthdate, dateChange, user, affiliation)
-							values ($maxId, 1, '$document', '$names', '$lastnames', '$sex', '$church', '$phone', '$email', '$startMinistry', '$dateIn', '$theologicalLevel', '$typePerson', '$pastoralLevel', '$maritalStatus', '$academicLevel', '$socialSecurity', '$typeHome', '$birthdate', curdate(), '$user', '$affiliation')");
+		$data = mysql_query("insert into person(id, `status`, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, socialSecurity, typeHome, birthdate, dateChange, user, affiliation, whereLive, `repeat`)
+							values ($maxId, 1, '$document', '$names', '$lastnames', '$sex', '$church', '$phone', '$email', '$startMinistry', '$dateIn', '$theologicalLevel', '$typePerson', '$pastoralLevel', '$maritalStatus', '$academicLevel', '$socialSecurity', '$typeHome', '$birthdate', curdate(), '$user', '$affiliation', '$whereLive', 'true')");
 		
 		if($data)
 			return 'ok';
@@ -17,15 +17,12 @@ class person extends initial {
 			return mysql_error();
 	}
 
-	public function update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation){
+	public function update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation, $whereLive){
 		
 		$doc = mysql_query("select document from person where id = '$id'");
 		$doc = mysql_fetch_array($doc);
 		$doc = $doc["document"];
-		/*
-		if($document != $doc)
-		{
-		}*/
+
 		mysql_query("update person set document = '$document' where document = '$doc'");
 
 		#get max id
@@ -33,13 +30,15 @@ class person extends initial {
 		$maxId = mysql_fetch_array($maxId);
 		$maxId = ++$maxId["id"];
 		
-		$data = mysql_query("insert into person(id, `status`, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, socialSecurity, typeHome, birthdate, dateChange, user, affiliation)
-							values ($maxId, 1, '$document', '$names', '$lastnames', '$sex', '$church', '$phone', '$email', '$startMinistry', '$dateIn', '$theologicalLevel', '$typePerson', '$pastoralLevel', '$maritalStatus', '$academicLevel', '$socialSecurity', '$typeHome', '$birthdate', curdate(), '$user', '$affiliation')");
-		
-		if(mysql_query("update person set status = 0 where id != '$maxId'") && $data)
-			return $maxId;
+		$data = mysql_query("insert into person(id, `status`, document, names, lastnames, sex, church, phone, email, startMinistry, dateIn, theologicalLevel, typePerson, pastoralLevel, maritalStatus, academicLevel, socialSecurity, typeHome, birthdate, dateChange, user, affiliation, whereLive, `repeat`)
+							values ($maxId, 1, '$document', '$names', '$lastnames', '$sex', '$church', '$phone', '$email', '$startMinistry', '$dateIn', '$theologicalLevel', '$typePerson', '$pastoralLevel', '$maritalStatus', '$academicLevel', '$socialSecurity', '$typeHome', '$birthdate', curdate(), '$user', '$affiliation', '$whereLive', 'true')");
+		if($data)
+			if(mysql_query("update person set status = 0 where id != '$maxId' and document = '$document'"))
+				return $maxId;
+			else
+				return "na";
 		else
-			"na";
+			return "na";
 	}
 
 	public function getPerson($document){
@@ -70,11 +69,12 @@ class person extends initial {
 				circuit.id as idCircuit,
 				circuit.name,
 				circuit.nick,
-				circuit.zone
+				circuit.zone 
 				from person, city, church, circuit
-				where person.document = '$document' and person.`status` = '1'
+				where person.document = '$document'
 				and person.church = church.id
 				and church.city = city.id
+				and person.`status` = '1'
 				and circuit.id = church.circuit";
 
 		return $this->getAllRows($sql);
@@ -101,7 +101,16 @@ class person extends initial {
 	}
 	
 	public function getByNames($names){
-		$sql = "select person.*, city.name as city, church.name as church 
+		/*$sql = "select person.*, city.name as city, church.name as church, Count(*) As cantidad 
+				from person, city, church 
+				where person.names like '%$names%' 
+				
+				and person.church = church.id
+				and church.city = city.id
+				Group By person.document
+				order by lastnames, names";*/
+
+				$sql = "select person.*, city.name as city, church.name as church 
 				from person, city, church 
 				where person.names like '%$names%' 
 				and person.status = '1'
@@ -112,24 +121,26 @@ class person extends initial {
 	}
 
 	public function getByLastnames($lastnames){
-		$sql = "select person.*, city.name as city, church.name as church 
+		$sql = "select person.*, city.name as city, church.name as church
 				from person, city, church 
 				where person.lastnames like '%$lastnames%' 
-										and person.status = '1'
+										
 										and person.church = church.id
 										and church.city = city.id
+										and person.status = '1'
 										order by lastnames, names";
 		return $this->getAllRows($sql);
 	}
 
 	public function getByNamesLastnames($names, $lastnames){
-		$sql = "select person.*, city.name as city, church.name as church 
+		$sql = "select person.*, city.name as city, church.name as church
 				from person, city, church 
 				where person.names like '%$names%' 
 										and person.lastnames like '%$lastnames%'
 										and person.status = '1'
 										and person.church = church.id
 										and church.city = city.id
+										
 										order by lastnames, names";
 		return $this->getAllRows($sql);
 	}

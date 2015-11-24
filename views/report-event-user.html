@@ -1,33 +1,94 @@
-<div class="span4 offset4">
+<div class="span12">
 	<h2>Reporte eventos</h2>
-	<form ng-submit='save()'>
-		<table class="table table-hover">
-			<tr>
-				<td>Eventos</td>
-				<td>
-					<select ng-model="event" id="">
-						<option value="" selected disabled>Selecciona:</option>
-						<option value="">Evento 1</option>
-						<option value="">Evento 2</option>
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>Fecha</td>
-				<td>
-					<select ng-model="event" id="">
-						<option value="" selected disabled>Selecciona:</option>
-						<option value="">Usuario 1</option>
-						<option value="">Usuario 2</option>
-					</select>
-
-				</td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" class='btn btn-primary' value="Ver reporte"></td>
-			</tr>
-		</table>
+	<form>
+		<div ng-if='admin'>
+			<table class="table table-hover">
+				<tr>
+					<td>Zona</td>
+					<td>Tipo</td>
+					<td>Participación</td>
+					<td>Con comida / Sin comida</td>
+					<td></td>
+				</tr>
+				<tr>
+					<td>
+						<select ng-model="zone" id="zone" ng-change='getCircuitByZone()'>
+							<option ng-repeat='z in zones' value="{{z.id}}">{{ z.name }}</option>
+						</select>
+					</td>
+					<td>
+						<select ng-model="typePerson" id="typePerson">
+							<option value="" selected="">Seleccionar:</option>
+							<option value="PASTOR">PASTOR</option>
+							<option value="CO-PASTOR">CO-PASTOR</option>
+							<option value="ESPOSA DE PASTOR">ESPOSA DE PASTOR</option>
+							<option value="LIDER">LIDER</option>
+						</select>
+					</td>
+					<td>
+						<select ng-model="participation" id="participation">
+							<option value="" selected="">Seleciona:</option>
+							<option value="DELEGADO">DELEGADO</option>
+							<option value="ASISTENTE">ASISTENTE</option>
+						</select>
+					</td>
+					<td>
+						<select ng-model="idPrice" id="idPrice">
+							<option value="{{ p.id }}" ng-repeat='p in events'> {{ p.price }} - {{p.description}} </option>
+						</select>
+					</td>
+					<td><input type="submit" class='btn btn-primary' ng-click="consultar()" value="Consultar"></td>
+				</tr>
+				<tr>
+					<td>Usuario</td>
+					<td>
+						<select ng-model="usuario" id="usuario" ng-change='getReport()'>
+							<option value="{{u.user}}" ng-repeat='u in users'>{{u.user}}</option>
+						</select>
+					</td>
+					<td><input type="submit" class='btn btn-primary' ng-click='viewAll()' value="Ver todos los inscritos"></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</table>
+		</div>
+		<div>
+			<h6>Resultados encontrados: {{ report.length }}</h6>
+			<h6>Usuario: {{ usuario }}</h6>
+			<h6>Fecha y hora: {{ date }}</h6>
+			<table class="table table-hover">
+				<tr>
+					<th>#</th>
+					<th>Documento</th>
+					<th>Apellidos</th>
+					<th>Nombres</th>
+					<th>Consecutivo</th>
+					<th>Participación</th>
+					<th>Fecha y hora</th>
+					<th>valor</th>
+				</tr>
+				<tr ng-repeat='r in report'>
+					<td> {{ r.count }} </td>
+					<td> {{ r.document }} </td>
+					<td> {{ r.lastnames }} </td>
+					<td> {{ r.names }} </td>
+					<td> {{ r.id }} </td>
+					<td> {{ r.participation }} </td>
+					<td> {{ r.date }}</td>
+					<td> {{ r.price | currency  }} </td>
+				</tr>
+				<tr>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td><h5>{{ total | currency }}</h5></td>
+				</tr>
+			</table>
+		</div>
 	</form>
 </div>
 <div ng-include="'partials/modal-window.html'"></div>

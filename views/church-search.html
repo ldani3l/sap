@@ -30,21 +30,26 @@
 			<th>Nombre</th>
 			<th>Zona</th>
 			<th>Circuito</th>
+			<th>Pastor</th>
 			<th>Ciudad</th>
-			<th>Vereda</th>
 			<th>Categoría</th>
 			<th>Dirección</th>
 			<th>Editar</th>
+			<th>Actualizado</th>
 		</tr>
 		<tr ng-repeat='c in churches'>
 			<td>{{c.name}}</td>
 			<td>{{c.zone}}</td>
 			<td>{{c.nameCircuit}}</td>
+			<td><a href="#/person-profile/{{c.document}}">{{c.names}} {{c.lastnames}} </a></td>
 			<td>{{c.nameCity}}</td>
-			<td>{{c.vereda}}</td>
 			<td>{{c.category}}</td>
 			<td>{{c.address}}</td>
 			<td><a href="#/church-update/{{c.id}}"><i class='icon-edit'></i></a></td>
+			<td>
+				<i class='icon-ok' ng-show="c.repeat"></i>
+				<i class='icon-ban-circle' ng-show="!c.repeat"></i>
+			</td>
 		</tr>
 	</table>
 </div>

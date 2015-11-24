@@ -19,6 +19,7 @@
 			<th>Iglesia</th>
 			<th>Ciudad</th>
 			<th>Ver perfil</th>
+			<th>Actualizado</th>
 		</tr>
 		<tr ng-repeat='p in person'>
 			<td> {{ p.document }} </td>
@@ -26,7 +27,13 @@
 			<td> {{ p.typePerson }} </td>
 			<td> {{ p.church }} </td>
 			<td> {{ p.city }} </td>
-			<td><a href='#/person-profile/{{ p.document }}' title="Ver perfil"><i class="icon-user"></i></a></td>
+			<td>
+				<a href='#/person-profile/{{ p.document }}' title="Ver perfil"><i class="icon-user"></i></a>
+			</td>
+			<td>
+				<i class='icon-ok' ng-show="p.repeat"></i>
+				<i class='icon-ban-circle' ng-show="!p.repeat"></i>
+			</td>
 		</tr>
 	</table>
 </div>

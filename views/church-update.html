@@ -3,10 +3,14 @@
 	<form ng-submit='saveChurch()' novalidate name="churches">
 		<table class="table table-hover">
 			<tr>
+				<td>Pastor</td>
+				<td><a href="#/person-profile/{{document}}"> {{names}} {{lastnames}} </a></td>
+			</tr>
+			<tr>
 				<td>Zona</td>
 				<td>
-					<select ng-model="zone" ng-change='getCircuitByZone()' required>
-						<option ng-repeat='z in zones' value="{{z.id}}">{{ z.name }}</option>
+					<select ng-model="zone" id="zone" ng-change='getCircuitByZone()' required>
+						<!--<option ng-repeat='z in zones' value="{{z.id}}">{{ z.name }}</option>-->
 					</select>
 				</td>
 			</tr>
@@ -14,7 +18,7 @@
 				<td>Circuito</td>
 				<td>
 					<select ng-model="circuit" id="circuit" required>
-						<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>
+						<!--<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>-->
 					</select>
 				</td>
 			</tr>
@@ -72,18 +76,18 @@
 				</td>
 			</tr>
 			<tr>
-				<td>Departamento</td>
+				<td>Departamento {{department}}</td>
 				<td>
-					<select ng-model="department" ng-change='loadCity()' required>
-						<option value="{{ d.id }}" ng-repeat='d in departments'>{{ d.name }}</option>
+					<select ng-model="department" id="department" ng-change='loadCity()' required>
+						<!--<option value="{{ d.id }}" ng-repeat='d in departments'>{{ d.name }}</option>-->
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td>Ciudad</td>
 				<td>
-					<select ng-model="city" required>
-						<option value="{{ d.id }}" ng-repeat='d in cities'>{{ d.name }}</option>
+					<select ng-model="city" id="city" required>
+						<!--<option value="{{ d.id }}" ng-repeat='d in cities'>{{ d.name }}</option>-->
 					</select>
 				</td>
 			</tr>

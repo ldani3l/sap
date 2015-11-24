@@ -1,6 +1,6 @@
 <div class="span4 offset4">
 	<h2>Nueva persona</h2>
-	<form ng-submit='save()' novalidate name='person'>
+	<form ng-submit='save()' name='person'>
 		<table class="table table-hover">
 			<tr>
 				<td>Documento</td>
@@ -39,7 +39,7 @@
 			<tr>
 				<td>Circuito</td>
 				<td>
-					<select ng-model="circuit" ng-change='getChurchesByCircuit()' required>
+					<select ng-model="circuit" id="circuit" ng-change='getChurchesByCircuit()' required>
 						<option ng-repeat='c in circuits' value="{{c.id}}">{{ c.name }} {{ c.nick }}</option>
 					</select>
 				</td>
@@ -67,7 +67,7 @@
 			<tr>
 				<td>Tipo</td>
 				<td>
-					<select ng-model="typePerson" required>
+					<select ng-model="typePerson" id="typePerson" required ng-change='deleteProp()'>
 						<option value="" selected="">Seleccionar:</option>
 						<option value="PASTOR">PASTOR</option>
 						<option value="CO-PASTOR">CO-PASTOR</option>
@@ -79,7 +79,7 @@
 			<tr>
 				<td>Nivel teológico</td>
 				<td>
-					<select ng-model="theologicalLevel" id="theologicalLevel">
+					<select ng-model="theologicalLevel" id="theologicalLevel" required>
 						<option value="" selected="">Selecionar:</option>
 						<option value="CIPEP - NIVEL BASICO">CIPEP - NIVEL BASICO</option>
 						<option value="CIPEP - NIVEL MEDIO">CIPEP - NIVEL MEDIO</option>
@@ -87,13 +87,14 @@
 						<option value="SEMINARIO BIBLICO DE COLOMBIA">SEMINARIO BIBLICO DE COLOMBIA (MEDELLIN)</option>
 						<option value="BAUTISTA DE CALI">BAUTISTA DE CALI</option>
 						<option value="UNIVERSIDAD JAVERIANA">UNIVERSIDAD JAVERIANA</option>
+						<option value="NINGUNO">NINGUNO</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td>Grado pastoral</td>
 				<td>
-					<select ng-model="pastoralLevel" id="pastoralLevel">
+					<select ng-model="pastoralLevel" id="pastoralLevel" required>
 						<option value="" selected="">Seleccionar:</option>
 						<option value="OBRERO">OBRERO</option>
 						<option value="EN FORMACIÓN">EN FORMACIÓN</option>
@@ -106,7 +107,7 @@
 			<tr>
 				<td>Estado civil</td>
 				<td>
-					<select ng-model="maritalStatus" required>
+					<select ng-model="maritalStatus" id="maritalStatus" required>
 						<option selected="" value="">Estado Civil:</option>
 						<option value="SOLTERO">SOLTERO</option>
 						<option value="CASADO">CASADO</option>
@@ -120,7 +121,7 @@
 			<tr>
 				<td>Nivel académico</td>
 				<td>
-					<select ng-model="academicLevel" required>
+					<select ng-model="academicLevel" id="academicLevel" required>
 						<option selected="" value="">Nivel académico:</option>
 						<option value="BÁSICA PRIMARIA">BÁSICA PRIMARIA</option>
 						<option value="SECUNDARIA INCOMPLETA">SECUNDARIA INCOMPLETA</option>
@@ -136,7 +137,7 @@
 				<td>Seguridad social</td>
 				<td>
 					<select ng-model="socialSecurity" id="socialSecurity" ng-change='enableAffiliation()' required>
-						<option selected="" value="" disabled>Seguridad Social:</option>
+						<option selected="" value="">Seguridad Social:</option>
 						<option value="SI">SI</option>
 						<option value="NO">NO</option>
 						<option value="REGIMEN SUBSIDIADO">REGIMEN SUBSIDIADO</option>
@@ -156,16 +157,27 @@
 			<tr>
 				<td>Tiene casa propia?</td>
 				<td> 
-					<select ng-model="typeHome" required>
+					<select ng-model="typeHome" id="typeHome" required>
 						<option value="" selected="">Seleccionar:</option>
+						<option value="SI">SI</option>
+						<option value="NO">NO</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>Donde vive?</td>
+				<td>
+					<select ng-model="whereLive" required id="whereLive">
+						<option value="" selected>Seleccionar:</option>
 						<option value="PROPIA">PROPIA</option>
+						<option value="CASA PASTORAL">CASA PASTORAL</option>
 						<option value="ARRENDADA">ARRENDADA</option>
 					</select>
 				</td>
 			</tr>
 			<tr>
 				<td></td>
-				<td><input type="submit" class='btn btn-primary' value="Guardar" ng-disabled='person.$invalid'></td>
+				<td><input type="submit" class='btn btn-primary' value="Guardar" ></td>
 			</tr>
 		</table>
 	</form>

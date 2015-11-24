@@ -8,7 +8,7 @@ class church extends initial {
 		
 		$data = mysql_query("update church set `name` = '$name',`category` = '$category',`address` = '$address', `phone` = '$phone', `cellular` = '$cellular',
 		`vereda` = '$vereda', `email` = '$email',`countMembers` = '$countMembers',`personeria` = '$personeria',`circuit` = '$circuit',`city` = '$city',`statusICM` = '$statusICM',
-		`yearDedication` = '$yearDedication',`nit` = '$nit',`user` = '$user' where id = '$id'");
+		`yearDedication` = '$yearDedication',`nit` = '$nit',`user`  = '$user', `repeat` = 'true' where id = '$id'");
 							
 		if($data)
 			return "ok";
@@ -35,14 +35,20 @@ class church extends initial {
 				circuit.name as nameCircuit,
 				circuit.zone,
 				city.name as nameCity,
-				city.department
+				city.department,
+				person.id as idPerson,
+				person.names,
+				person.lastnames,
+				person.document
 				from 
 				church,
 				circuit,
-				city
+				city,
+				person
 				where 
 				church.circuit = circuit.id
 				and church.city = city.id
+				and person.church = church.id
 				and church.id = '$id'";
 		return $this->getOneRow($sql);
 	}
@@ -52,14 +58,20 @@ class church extends initial {
 				church.*,
 				circuit.name as nameCircuit,
 				circuit.zone,
-				city.name as nameCity
+				city.name as nameCity,
+				person.id as idPerson,
+				person.names,
+				person.lastnames,
+				person.document
 				from 
 				church,
 				circuit,
-				city
+				city,
+				person
 				where 
 				church.circuit = circuit.id
 				and church.city = city.id
+				and person.church = church.id
 				and circuit.zone = '$zone'
 				and church.name like '%$name%'
 				order by church.name";
@@ -71,14 +83,20 @@ class church extends initial {
 				church.*,
 				circuit.name as nameCircuit,
 				circuit.zone,
-				city.name as nameCity
+				city.name as nameCity,
+				person.id as idPerson,
+				person.names,
+				person.lastnames,
+				person.document
 				from 
 				church,
 				circuit,
-				city
+				city,
+				person
 				where 
 				church.circuit = circuit.id
 				and church.city = city.id
+				and person.church = church.id
 				and circuit.id = '$circuit'
 				and church.name like '%$name%'
 				order by church.name";
@@ -90,14 +108,20 @@ class church extends initial {
 				church.*,
 				circuit.name as nameCircuit,
 				circuit.zone,
-				city.name as nameCity
+				city.name as nameCity,
+				person.id as idPerson,
+				person.names,
+				person.lastnames,
+				person.document
 				from 
 				church,
 				circuit,
-				city
+				city,
+				person
 				where 
 				church.circuit = circuit.id
 				and church.city = city.id
+				and person.church = church.id
 				and circuit.id = '$circuit'
 				order by church.name";
 		return $this->getAllRows($sql);
@@ -108,14 +132,20 @@ class church extends initial {
 				church.*,
 				circuit.name as nameCircuit,
 				circuit.zone,
-				city.name as nameCity
+				city.name as nameCity,
+				person.id as idPerson,
+				person.names,
+				person.lastnames,
+				person.document
 				from 
 				church,
 				circuit,
-				city
+				city,
+				person
 				where 
 				church.circuit = circuit.id
 				and church.city = city.id
+				and person.church = church.id
 				and circuit.zone = '$zone'
 				order by church.name";
 		return $this->getAllRows($sql);
@@ -126,14 +156,20 @@ class church extends initial {
 				church.*,
 				circuit.name as nameCircuit,
 				circuit.zone,
-				city.name as nameCity
+				city.name as nameCity,
+				person.id as idPerson,
+				person.names,
+				person.lastnames,
+				person.document
 				from 
 				church,
 				circuit,
-				city
+				city,
+				person
 				where 
 				church.circuit = circuit.id
 				and church.city = city.id
+				and person.church = church.id
 				and church.name like '%$name%'
 				order by church.name";
 		return $this->getAllRows($sql);

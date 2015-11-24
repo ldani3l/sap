@@ -107,7 +107,7 @@
   {
     $rootScope.$on('$routeChangeStart', function()
     {
-        checkStatus();
+        //checkStatus();
     });
 
   function checkStatus(){
@@ -117,26 +117,26 @@
           $location.path("/login");
           $route.reload();
         }
-    }
+  }
 
-    function in_array(haystack)
-    {
-        var key = false;
-        //console.log($rootScope.urls);
-        needle = $location.path();
-        a = ''
-        angular.forEach(haystack, function(d){
-            a = d.url;
-            //console.log(needle.slice(0, d.url.length) +" = "+ a);
-            if(d.url == needle.slice(0, d.url.length))//needle.slice(0, d.url[0].length)) //
-            {
-                //console.log(needle +" = "+d.url);
-                key = true;
-            }
-        });
-        //console.log(key);
-        return key;
-    }
+  function in_array(haystack)
+  {
+      var key = false;
+      //console.log($rootScope.urls);
+      needle = $location.path();
+      a = ''
+      angular.forEach(haystack, function(d){
+          a = d.url;
+          //console.log(needle.slice(0, d.url.length) +" = "+ a);
+          if(d.url == needle.slice(0, d.url.length))//needle.slice(0, d.url[0].length)) //
+          {
+              //console.log(needle +" = "+d.url);
+              key = true;
+          }
+      });
+      //console.log(key);
+      return key;
+  }
 
   });
 

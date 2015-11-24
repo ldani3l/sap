@@ -14,13 +14,13 @@
 				<td>Evento</td>
 				<td>
 					{{ nameEvent }}
-					<input type="hidden" value="{{ event }}" id="event">
+					<input type="hidden" value="{{ event }}" id="event" required>
 				</td>
 			</tr>
 			<tr>
 				<td>Participación</td>
 				<td>
-					<select ng-model="participation" id="">
+					<select ng-model="participation" id="" required>
 						<option value="" selected="">Seleciona:</option>
 						<option value="DELEGADO">DELEGADO</option>
 						<option value="ASISTENTE">ASISTENTE</option>

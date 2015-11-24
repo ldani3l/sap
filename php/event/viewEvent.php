@@ -49,7 +49,7 @@ switch($action){
 		$event = mysql_fetch_array($event);
 		$event = $event["event"];
 		//echo $event;
-		if($e->valid($document, $event)==0){
+		if($e->valid($document, $event)==0){ #Valida que no se haya registrado a la persona en el evento.
 			$json = $e->register($participation, $people["id"], $idPrice, $user);
 			echo $json;
 		}

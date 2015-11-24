@@ -28,9 +28,10 @@ switch($action){
 		$socialSecurity = $data->socialSecurity;
 		$user = $data->user;
 		$affiliation = $data->affiliation;
+		$whereLive = $data->whereLive;
 
 		$p = new person();
-		$result = $p->newPerson($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation);
+		$result = $p->newPerson($document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation, $whereLive);
 		echo $result;
 
 	break;
@@ -58,9 +59,10 @@ switch($action){
 		$socialSecurity = $data->socialSecurity;
 		$user = $data->user;
 		$affiliation = $data->affiliation;
+		$whereLive = $data->whereLive;
 
 		$p = new person();
-		$result = $p->update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation);
+		$result = $p->update($id, $document, $names, $lastnames, $sex, $church, $phone, $email, $startMinistry, $dateIn, $theologicalLevel, $typePerson, $pastoralLevel, $maritalStatus, $academicLevel, $socialSecurity, $typeHome, $birthdate, $user, $affiliation, $whereLive);
 		echo $result;
 	break;
 	
@@ -99,7 +101,7 @@ switch($action){
 			echo "[]";
 		else
 			echo json_encode($json);
-
+		//echo $json;
 	break;
 
 	/*
